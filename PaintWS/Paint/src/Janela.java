@@ -24,7 +24,7 @@ public class Janela extends JFrame
     protected JLabel statusBar1 = new JLabel ("Mensagem:"),
                      statusBar2 = new JLabel ("Coordenada:");
 
-    protected boolean esperaPonto, esperaInicioReta, esperaFimReta;
+    protected Acao acao = Acao.Nenhuma;
 
     protected Color corAtual = Color.BLACK;
     protected Ponto p1;
@@ -184,7 +184,7 @@ public class Janela extends JFrame
         
         this.addWindowListener (new FechamentoDeJanela());
 
-        this.setSize (700,500);
+        this.setSize (1000,500);
         this.setVisible (true);
     }
 
@@ -208,29 +208,29 @@ public class Janela extends JFrame
         
         public void mousePressed (MouseEvent e)
         {
-            if (esperaPonto)
-            {
+        	switch (acao) {
+        	case Ponto:
                 figuras.add (new Ponto (e.getX(), e.getY(), corAtual));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
-                esperaPonto = false;
-            }
-            else
-                if (esperaInicioReta)
-                {
-                    p1 = new Ponto (e.getX(), e.getY(), corAtual);
-                    esperaInicioReta = false;
-                    esperaFimReta = true;
-                    statusBar1.setText("Mensagem: clique o ponto final da reta");    
-                 }
-                 else
-                    if (esperaFimReta)
-                    {
-                        esperaInicioReta = false;
-                        esperaFimReta = false;
-                        figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual));
-                        figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
-                        statusBar1.setText("Mensagem:");    
-                    }
+                limparAcao();
+                break;
+                
+        	case InicioReta:
+                p1 = new Ponto (e.getX(), e.getY(), corAtual);
+                acao = Acao.FimReta;
+                statusBar1.setText("Mensagem: clique o ponto final da reta"); 
+                break;
+                
+        	case FimReta:
+                figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual));
+                figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
+                limparAcao();
+                break;
+           
+        	default:
+        		limparAcao();
+        		break;
+        	}
         }
         
         public void mouseReleased (MouseEvent e)
@@ -252,28 +252,28 @@ public class Janela extends JFrame
         {
             statusBar2.setText("Coordenada: "+e.getX()+","+e.getY());
         }
+        
+        private void limparAcao() 
+        {
+        	acao = Acao.Nenhuma;
+            statusBar1.setText("Mensagem: ");
+        }
     }
 
     protected class DesenhoDePonto implements ActionListener
     {
-          public void actionPerformed (ActionEvent e)    
-          {
-              esperaPonto      = true;
-              esperaInicioReta = false;
-              esperaFimReta    = false;
-
-              statusBar1.setText("Mensagem: clique o local do ponto desejado");
-          }
+    	public void actionPerformed (ActionEvent e)    
+    	{
+	  		acao = Acao.Ponto;	
+    		statusBar1.setText("Mensagem: clique o local do ponto desejado");
+    	}
     }
 
     protected class DesenhoDeReta implements ActionListener
     {
         public void actionPerformed (ActionEvent e)    
         {
-            esperaPonto      = false;
-            esperaInicioReta = true;
-            esperaFimReta    = false;
-
+    		acao = Acao.InicioReta;
             statusBar1.setText("Mensagem: clique o ponto inicial da reta");
         }
     }
