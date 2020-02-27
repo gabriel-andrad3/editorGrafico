@@ -9,24 +9,27 @@ public class Janela extends JFrame
 {
     protected static final long serialVersionUID = 1L;
 
-    protected JButton btnPonto   = new JButton ("Ponto"),
-                      btnLinha   = new JButton ("Linha"),
-                      btnCirculo = new JButton ("Circulo"),
-                      btnElipse  = new JButton ("Elipse"),
-                      btnCores   = new JButton ("Cores"),
-                      btnAbrir   = new JButton ("Abrir"),
-                      btnSalvar  = new JButton ("Salvar"),
-                      btnApagar  = new JButton ("Apagar"),
-                      btnSair    = new JButton ("Sair");
+    protected JButton btnPonto   = new JButton("Ponto"),
+                      btnLinha   = new JButton("Linha"),
+                      btnCirculo = new JButton("Circulo"),
+                      btnElipse  = new JButton("Elipse"),
+                      btnContorno   = new JButton("Contorno"),
+                      btnPreenchimento = new JButton("Preenchimento"),
+                      btnAbrir   = new JButton("Abrir"),
+                      btnSalvar  = new JButton("Salvar"),
+                      btnApagar  = new JButton("Apagar"),
+                      btnSair    = new JButton("Sair");
 
     protected MeuJPanel pnlDesenho = new MeuJPanel ();
     
-    protected JLabel statusBar1 = new JLabel ("Mensagem:"),
-                     statusBar2 = new JLabel ("Coordenada:");
+    protected JLabel stsMensagem = new JLabel ("Mensagem:"),
+                     stsCoordenada = new JLabel ("Coordenada:");
 
     protected Acao acao = Acao.Nenhuma;
 
-    protected Color corAtual = Color.BLACK;
+    protected Color corAtualContorno = Color.BLACK;
+    protected Color corAtualPreenchimento = Color.BLACK;
+    
     protected Ponto p1;
     
     protected Vector<Figura> figuras = new Vector<Figura>();
@@ -90,7 +93,8 @@ public class Janela extends JFrame
         try
         {
             Image btnCoresImg = ImageIO.read(getClass().getResource("resources/cores.jpg"));
-            btnCores.setIcon(new ImageIcon(btnCoresImg));
+            btnContorno.setIcon(new ImageIcon(btnCoresImg));
+            btnPreenchimento.setIcon(new ImageIcon(btnCoresImg));
         }
         catch (IOException e)
         {
@@ -152,8 +156,10 @@ public class Janela extends JFrame
                                            JOptionPane.WARNING_MESSAGE);
         }
 
-        btnPonto.addActionListener (new DesenhoDePonto());
-        btnLinha.addActionListener (new DesenhoDeReta ());
+        btnPonto.addActionListener(new DesenhoDePonto());
+        btnLinha.addActionListener(new DesenhoDeReta ());
+        btnContorno.addActionListener(new SelecionaCorContorno(this));
+        btnPreenchimento.addActionListener(new SelecionaCorPreenchimento(this));
 
         JPanel     pnlBotoes = new JPanel();
         FlowLayout flwBotoes = new FlowLayout(); 
@@ -165,7 +171,8 @@ public class Janela extends JFrame
         pnlBotoes.add (btnLinha);
         pnlBotoes.add (btnCirculo);
         pnlBotoes.add (btnElipse);
-        pnlBotoes.add (btnCores);
+        pnlBotoes.add (btnContorno);
+        pnlBotoes.add (btnPreenchimento);
         pnlBotoes.add (btnApagar);
         pnlBotoes.add (btnSair);
 
@@ -173,8 +180,8 @@ public class Janela extends JFrame
         GridLayout grdStatus = new GridLayout(1,2);
         pnlStatus.setLayout(grdStatus);
 
-        pnlStatus.add(statusBar1);
-        pnlStatus.add(statusBar2);
+        pnlStatus.add(stsMensagem);
+        pnlStatus.add(stsCoordenada);
 
         Container cntForm = this.getContentPane();
         cntForm.setLayout (new BorderLayout());
@@ -210,19 +217,19 @@ public class Janela extends JFrame
         {
         	switch (acao) {
         	case Ponto:
-                figuras.add (new Ponto (e.getX(), e.getY(), corAtual));
+                figuras.add(new Ponto (e.getX(), e.getY(), corAtualContorno));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 limparAcao();
                 break;
                 
         	case InicioReta:
-                p1 = new Ponto (e.getX(), e.getY(), corAtual);
+                p1 = new Ponto (e.getX(), e.getY(), corAtualContorno);
                 acao = Acao.FimReta;
-                statusBar1.setText("Mensagem: clique o ponto final da reta"); 
+                stsMensagem.setText("Mensagem: clique o ponto final da reta"); 
                 break;
                 
         	case FimReta:
-                figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtual));
+                figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtualContorno));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 limparAcao();
                 break;
@@ -250,13 +257,13 @@ public class Janela extends JFrame
 
         public void mouseMoved(MouseEvent e)
         {
-            statusBar2.setText("Coordenada: "+e.getX()+","+e.getY());
+            stsCoordenada.setText("Coordenada: "+e.getX()+","+e.getY());
         }
         
         private void limparAcao() 
         {
         	acao = Acao.Nenhuma;
-            statusBar1.setText("Mensagem: ");
+            stsMensagem.setText("Mensagem: ");
         }
     }
 
@@ -265,7 +272,7 @@ public class Janela extends JFrame
     	public void actionPerformed (ActionEvent e)    
     	{
 	  		acao = Acao.Ponto;	
-    		statusBar1.setText("Mensagem: clique o local do ponto desejado");
+    		stsMensagem.setText("Mensagem: clique o local do ponto desejado");
     	}
     }
 
@@ -274,8 +281,38 @@ public class Janela extends JFrame
         public void actionPerformed (ActionEvent e)    
         {
     		acao = Acao.InicioReta;
-            statusBar1.setText("Mensagem: clique o ponto inicial da reta");
+            stsMensagem.setText("Mensagem: clique o ponto inicial da reta");
         }
+    }   
+    
+    protected class SelecionaCorContorno implements ActionListener
+    {   	
+    	private Component component;
+    	
+    	public SelecionaCorContorno(Component component) {
+    		this.component = component;
+    	}
+    	
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		corAtualContorno = JColorChooser.showDialog(this.component, "Cor do contorno", corAtualContorno);
+    		stsMensagem.setText("Mensagem: selecione a cor do contorno");
+    	}
+    }
+    
+    protected class SelecionaCorPreenchimento implements ActionListener
+    {
+    	private Component component;
+    	
+    	public SelecionaCorPreenchimento(Component component) {
+    		this.component = component;
+    	}
+    	
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		corAtualPreenchimento = JColorChooser.showDialog(this.component, "Cor do preenchimento", corAtualPreenchimento);
+    		stsMensagem.setText("Mensagem: selecione a cor do preenchimento");
+    	}
     }
 
     protected class FechamentoDeJanela extends WindowAdapter
