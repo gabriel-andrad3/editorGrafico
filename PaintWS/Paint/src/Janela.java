@@ -13,8 +13,8 @@ public class Janela extends JFrame
                       btnLinha   = new JButton("Linha"),
                       btnCirculo = new JButton("Circulo"),
                       btnElipse  = new JButton("Elipse"),
-                      btnContorno   = new JButton("Contorno"),
-                      btnPreenchimento = new JButton("Preenchimento"),
+                      btnCorContorno   = new JButton("Contorno"),
+                      btnCorInterior = new JButton("Interior"),
                       btnAbrir   = new JButton("Abrir"),
                       btnSalvar  = new JButton("Salvar"),
                       btnApagar  = new JButton("Apagar"),
@@ -27,8 +27,8 @@ public class Janela extends JFrame
 
     protected Acao acao = Acao.Nenhuma;
 
-    protected Color corAtualContorno = Color.BLACK;
-    protected Color corAtualPreenchimento = Color.BLACK;
+    protected Color corContorno = Color.BLACK;
+    protected Color corInterior = Color.BLACK;
     
     protected Ponto p1;
     
@@ -93,8 +93,8 @@ public class Janela extends JFrame
         try
         {
             Image btnCoresImg = ImageIO.read(getClass().getResource("resources/cores.jpg"));
-            btnContorno.setIcon(new ImageIcon(btnCoresImg));
-            btnPreenchimento.setIcon(new ImageIcon(btnCoresImg));
+            btnCorContorno.setIcon(new ImageIcon(btnCoresImg));
+            btnCorInterior.setIcon(new ImageIcon(btnCoresImg));
         }
         catch (IOException e)
         {
@@ -158,8 +158,8 @@ public class Janela extends JFrame
 
         btnPonto.addActionListener(new DesenhoDePonto());
         btnLinha.addActionListener(new DesenhoDeReta ());
-        btnContorno.addActionListener(new SelecionaCorContorno(this));
-        btnPreenchimento.addActionListener(new SelecionaCorPreenchimento(this));
+        btnCorContorno.addActionListener(new SelecionaCorContorno(this));
+        btnCorInterior.addActionListener(new SelecionaCorInterior(this));
 
         JPanel     pnlBotoes = new JPanel();
         FlowLayout flwBotoes = new FlowLayout(); 
@@ -171,8 +171,8 @@ public class Janela extends JFrame
         pnlBotoes.add (btnLinha);
         pnlBotoes.add (btnCirculo);
         pnlBotoes.add (btnElipse);
-        pnlBotoes.add (btnContorno);
-        pnlBotoes.add (btnPreenchimento);
+        pnlBotoes.add (btnCorContorno);
+        pnlBotoes.add (btnCorInterior);
         pnlBotoes.add (btnApagar);
         pnlBotoes.add (btnSair);
 
@@ -217,19 +217,19 @@ public class Janela extends JFrame
         {
         	switch (acao) {
         	case Ponto:
-                figuras.add(new Ponto (e.getX(), e.getY(), corAtualContorno));
+                figuras.add(new Ponto (e.getX(), e.getY(), corContorno));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 limparAcao();
                 break;
                 
         	case InicioReta:
-                p1 = new Ponto (e.getX(), e.getY(), corAtualContorno);
+                p1 = new Ponto (e.getX(), e.getY(), corContorno);
                 acao = Acao.FimReta;
                 stsMensagem.setText("Mensagem: clique o ponto final da reta"); 
                 break;
                 
         	case FimReta:
-                figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corAtualContorno));
+                figuras.add (new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corContorno));
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 limparAcao();
                 break;
@@ -295,23 +295,23 @@ public class Janela extends JFrame
     	
     	public void actionPerformed(ActionEvent e)
     	{
-    		corAtualContorno = JColorChooser.showDialog(this.component, "Cor do contorno", corAtualContorno);
+    		corContorno = JColorChooser.showDialog(this.component, "Cor do contorno", corContorno);
     		stsMensagem.setText("Mensagem: selecione a cor do contorno");
     	}
     }
     
-    protected class SelecionaCorPreenchimento implements ActionListener
+    protected class SelecionaCorInterior implements ActionListener
     {
     	private Component component;
     	
-    	public SelecionaCorPreenchimento(Component component) {
+    	public SelecionaCorInterior(Component component) {
     		this.component = component;
     	}
     	
     	public void actionPerformed(ActionEvent e)
     	{
-    		corAtualPreenchimento = JColorChooser.showDialog(this.component, "Cor do preenchimento", corAtualPreenchimento);
-    		stsMensagem.setText("Mensagem: selecione a cor do preenchimento");
+    		corInterior = JColorChooser.showDialog(this.component, "Cor do interior", corInterior);
+    		stsMensagem.setText("Mensagem: selecione a cor do interior");
     	}
     }
 
