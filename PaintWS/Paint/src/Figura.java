@@ -2,26 +2,26 @@ import java.awt.*;
 
 public abstract class Figura
 {
-    protected Color cor;
-	  
+	protected Color corContorno;
+    
     protected Figura ()
     {
         this (Color.BLACK);
     }
-	  
-    protected Figura (Color cor)
+	
+    protected Figura (Color corContorno)
     {
-        this.cor = cor;
+        this.corContorno = corContorno;
     }
 	  
-    public void setCor (Color cor)
+    public void setCorContorno (Color corContorno)
     {
-        this.cor = cor;
+        this.corContorno = corContorno;
     }
 	  
-    public Color getCor()
+    public Color getCorContorno()
     {
-    	return this.cor;
+    	return this.corContorno;
     }
 
   //public abstract boolean equals         (Object obj);

@@ -10,12 +10,12 @@ public class Linha extends Figura
         this (x1, y1, x2, y2, Color.BLACK);
     }
 	
-    public Linha (int x1, int y1, int x2, int y2, Color cor)
+    public Linha (int x1, int y1, int x2, int y2, Color corContorno)
     {
-        super(cor);
+        super(corContorno);
 
-        this.p1 = new Ponto (x1,y1,cor);
-        this.p2 = new Ponto (x2,y2,cor);
+        this.p1 = new Ponto (x1, y1, corContorno);
+        this.p2 = new Ponto (x2, y2, corContorno);
     }
 
     public Linha (String s)
@@ -30,23 +30,23 @@ public class Linha extends Figura
         int   x2  = Integer.parseInt(quebrador.nextToken());
         int   y2  = Integer.parseInt(quebrador.nextToken());
 
-        Color cor = new Color (Integer.parseInt(quebrador.nextToken()),  // R
+        Color corContorno = new Color (Integer.parseInt(quebrador.nextToken()),  // R
                                Integer.parseInt(quebrador.nextToken()),  // G
                                Integer.parseInt(quebrador.nextToken())); // B
 
-        this.p1  = new Ponto (x1,y1,cor);
-        this.p2  = new Ponto (x2,y2,cor);
-        this.cor = cor;
+        this.p1  = new Ponto (x1,y1,corContorno);
+        this.p2  = new Ponto (x2,y2,corContorno);
+        this.corContorno = corContorno;
     }
 
     public void setP1 (int x, int y)
     {
-        this.p1 = new Ponto (x,y,this.getCor());
+        this.p1 = new Ponto (x, y, this.getCorContorno());
     }
 
     public void setP2 (int x, int y)
     {
-        this.p2 = new Ponto (x,y,this.getCor());
+        this.p2 = new Ponto (x, y, this.getCorContorno());
     }
 
     public Ponto getP1 ()
@@ -61,7 +61,7 @@ public class Linha extends Figura
 
     public void torneSeVisivel (Graphics g)
     {
-        g.setColor(this.cor);
+        g.setColor(this.corContorno);
         g.drawLine(this.p1.getX(), this.p1.getY(),   // ponto inicial
                    this.p2.getX(), this.p2.getY());  // ponto final
     }
@@ -77,10 +77,10 @@ public class Linha extends Figura
                ":" +
                this.p2.getY() +
                ":" +
-               this.getCor().getRed() +
+               this.getCorContorno().getRed() +
                ":" +
-               this.getCor().getGreen() +
+               this.getCorContorno().getGreen() +
                ":" +
-               this.getCor().getBlue();
+               this.getCorContorno().getBlue();
     }
 }

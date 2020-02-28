@@ -10,9 +10,9 @@ public class Ponto extends Figura
         this (x, y, Color.BLACK);
     }
 	  
-    public Ponto (int x, int y, Color cor)
+    public Ponto (int x, int y, Color corContorno)
     {
-        super (cor);
+        super (corContorno);
 
         this.x = x;
         this.y = y;
@@ -27,7 +27,7 @@ public class Ponto extends Figura
         this.x = Integer.parseInt(quebrador.nextToken());
         this.y = Integer.parseInt(quebrador.nextToken());
 
-        this.cor = new Color (Integer.parseInt(quebrador.nextToken()),  // R
+        this.corContorno = new Color (Integer.parseInt(quebrador.nextToken()),  // R
                               Integer.parseInt(quebrador.nextToken()),  // G
                               Integer.parseInt(quebrador.nextToken())); // B
     }
@@ -54,7 +54,7 @@ public class Ponto extends Figura
 	  
     public void torneSeVisivel (Graphics g)
     {
-    	g.setColor (this.cor);
+    	g.setColor (this.corContorno);
     	g.drawLine (this.x,this.y,this.x,this.y);
     }
 
@@ -65,10 +65,10 @@ public class Ponto extends Figura
                ":" +
                this.y +
                ":" +
-               this.getCor().getRed() +
+               this.getCorContorno().getRed() +
                ":" +
-               this.getCor().getGreen() +
+               this.getCorContorno().getGreen() +
                ":" +
-               this.getCor().getBlue();
+               this.getCorContorno().getBlue();
     }
 }

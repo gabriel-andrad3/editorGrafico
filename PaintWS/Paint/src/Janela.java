@@ -158,6 +158,7 @@ public class Janela extends JFrame
 
         btnPonto.addActionListener(new DesenhoDePonto());
         btnLinha.addActionListener(new DesenhoDeReta ());
+        btnElipse.addActionListener(new DesenhoDeElipse());
         btnCorContorno.addActionListener(new SelecionaCorContorno(this));
         btnCorInterior.addActionListener(new SelecionaCorInterior(this));
 
@@ -233,7 +234,19 @@ public class Janela extends JFrame
                 figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());
                 limparAcao();
                 break;
-           
+                
+        	case InicioElipse:
+        		p1 = new Ponto(e.getX(), e.getY());
+        		acao = Acao.FimElipse;
+        		stsMensagem.setText("Mensagem: clique o ponto final da elipse");
+        		break;
+        		
+        	case FimElipse:
+        		figuras.add(new Elipse(p1.getX(), p1.getY(), e.getX(), e.getY(), corContorno, corInterior));
+        		figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
+        		limparAcao();
+        		break;
+        		
         	default:
         		limparAcao();
         		break;
@@ -283,7 +296,16 @@ public class Janela extends JFrame
     		acao = Acao.InicioReta;
             stsMensagem.setText("Mensagem: clique o ponto inicial da reta");
         }
-    }   
+    }
+    
+    protected class DesenhoDeElipse implements ActionListener
+    {
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		acao = Acao.InicioElipse;
+    		stsMensagem.setText("Mensagem: clique no ponto inicial da elipse");
+    	}
+    }
     
     protected class SelecionaCorContorno implements ActionListener
     {   	
