@@ -158,6 +158,7 @@ public class Janela extends JFrame
 
         btnPonto.addActionListener(new DesenhoDePonto());
         btnLinha.addActionListener(new DesenhoDeReta ());
+        btnCirculo.addActionListener(new DesenhoDeCirculo());
         btnElipse.addActionListener(new DesenhoDeElipse());
         btnCorContorno.addActionListener(new SelecionaCorContorno(this));
         btnCorInterior.addActionListener(new SelecionaCorInterior(this));
@@ -235,6 +236,18 @@ public class Janela extends JFrame
                 limparAcao();
                 break;
                 
+        	case InicioCirculo:
+        		p1 = new Ponto(e.getX(), e.getY());
+        		acao = Acao.FimCirculo;
+        		stsMensagem.setText("Mensagem: clique o ponto final do circulo");
+        		break;
+                
+        	case FimCirculo:
+        		figuras.add(new Circulo(p1.getX(), p1.getY(), e.getX(), e.getY(), corContorno, corInterior));
+        		figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
+        		limparAcao();
+        		break;
+        		
         	case InicioElipse:
         		p1 = new Ponto(e.getX(), e.getY());
         		acao = Acao.FimElipse;
@@ -285,7 +298,7 @@ public class Janela extends JFrame
     	public void actionPerformed (ActionEvent e)    
     	{
 	  		acao = Acao.Ponto;	
-    		stsMensagem.setText("Mensagem: clique o local do ponto desejado");
+    		stsMensagem.setText("Mensagem: clique no local do ponto desejado");
     	}
     }
 
@@ -294,8 +307,17 @@ public class Janela extends JFrame
         public void actionPerformed (ActionEvent e)    
         {
     		acao = Acao.InicioReta;
-            stsMensagem.setText("Mensagem: clique o ponto inicial da reta");
+            stsMensagem.setText("Mensagem: clique no ponto inicial da reta");
         }
+    }
+    
+    protected class DesenhoDeCirculo implements ActionListener
+    {
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		acao = Acao.InicioCirculo;
+    		stsMensagem.setText("Mensagem: clique no ponto inicial do círculo");
+    	}
     }
     
     protected class DesenhoDeElipse implements ActionListener

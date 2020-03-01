@@ -3,6 +3,8 @@ public enum Acao {
 	Ponto,
 	InicioReta,
 	FimReta,
+	InicioCirculo,
+	FimCirculo,
 	InicioElipse,
 	FimElipse
 }
