@@ -339,8 +339,9 @@ public class Janela extends JFrame
     	
     	public void actionPerformed(ActionEvent e)
     	{
-    		corContorno = JColorChooser.showDialog(this.component, "Cor do contorno", corContorno);
     		stsMensagem.setText("Mensagem: selecione a cor do contorno");
+    		corContorno = JColorChooser.showDialog(this.component, "Cor do contorno", corContorno);
+    		stsMensagem.setText("Mensagem: ");
     	}
     }
     
@@ -354,8 +355,9 @@ public class Janela extends JFrame
     	
     	public void actionPerformed(ActionEvent e)
     	{
-    		corInterior = JColorChooser.showDialog(this.component, "Cor do interior", corInterior);
     		stsMensagem.setText("Mensagem: selecione a cor do interior");
+    		corInterior = JColorChooser.showDialog(this.component, "Cor do interior", corInterior);
+    		stsMensagem.setText("Mensagem: ");
     	}
     }
 
