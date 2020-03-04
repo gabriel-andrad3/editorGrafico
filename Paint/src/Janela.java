@@ -13,8 +13,7 @@ public class Janela extends JFrame
                       btnLinha   = new JButton("Linha"),
                       btnCirculo = new JButton("Circulo"),
                       btnElipse  = new JButton("Elipse"),
-                      btnCorContorno   = new JButton("Contorno"),
-                      btnCorInterior = new JButton("Interior"),
+                      btnCores   = new JButton("Cores"),
                       btnAbrir   = new JButton("Abrir"),
                       btnSalvar  = new JButton("Salvar"),
                       btnApagar  = new JButton("Apagar"),
@@ -24,7 +23,12 @@ public class Janela extends JFrame
     
     protected JLabel stsMensagem = new JLabel ("Mensagem:"),
                      stsCoordenada = new JLabel ("Coordenada:");
-
+    
+    protected JPopupMenu mnuCores = new JPopupMenu();
+    
+    protected JMenuItem itmCorContorno = new JMenuItem("Contorno");
+    protected JMenuItem itmCorInterior = new JMenuItem("Interior");
+    
     protected Acao acao = Acao.Nenhuma;
 
     protected Color corContorno = Color.BLACK;
@@ -93,8 +97,7 @@ public class Janela extends JFrame
         try
         {
             Image btnCoresImg = ImageIO.read(getClass().getResource("resources/cores.jpg"));
-            btnCorContorno.setIcon(new ImageIcon(btnCoresImg));
-            btnCorInterior.setIcon(new ImageIcon(btnCoresImg));
+            btnCores.setIcon(new ImageIcon(btnCoresImg));
         }
         catch (IOException e)
         {
@@ -160,8 +163,11 @@ public class Janela extends JFrame
         btnLinha.addActionListener(new DesenhoDeReta ());
         btnCirculo.addActionListener(new DesenhoDeCirculo());
         btnElipse.addActionListener(new DesenhoDeElipse());
-        btnCorContorno.addActionListener(new SelecionaCorContorno(this));
-        btnCorInterior.addActionListener(new SelecionaCorInterior(this));
+        
+        btnCores.addMouseListener(new AbreMenuCores());
+        
+        itmCorContorno.addActionListener(new SelecionaCorContorno(this));
+        itmCorInterior.addActionListener(new SelecionaCorInterior(this));
 
         JPanel     pnlBotoes = new JPanel();
         FlowLayout flwBotoes = new FlowLayout(); 
@@ -173,10 +179,12 @@ public class Janela extends JFrame
         pnlBotoes.add (btnLinha);
         pnlBotoes.add (btnCirculo);
         pnlBotoes.add (btnElipse);
-        pnlBotoes.add (btnCorContorno);
-        pnlBotoes.add (btnCorInterior);
+        pnlBotoes.add (btnCores);
         pnlBotoes.add (btnApagar);
         pnlBotoes.add (btnSair);
+        
+        mnuCores.add(itmCorContorno);
+        mnuCores.add(itmCorInterior);
 
         JPanel     pnlStatus = new JPanel();
         GridLayout grdStatus = new GridLayout(1,2);
@@ -193,7 +201,7 @@ public class Janela extends JFrame
         
         this.addWindowListener (new FechamentoDeJanela());
 
-        this.setSize (1000,500);
+        this.setSize (850,500);
         this.setVisible (true);
     }
 
@@ -329,6 +337,12 @@ public class Janela extends JFrame
     	}
     }
     
+    protected class AbreMenuCores extends MouseAdapter {
+        public void mouseReleased(MouseEvent e) {
+        	mnuCores.show(e.getComponent(), e.getX(), e.getY());
+        }
+    }
+    
     protected class SelecionaCorContorno implements ActionListener
     {   	
     	private Component component;
@@ -338,9 +352,9 @@ public class Janela extends JFrame
     	}
     	
     	public void actionPerformed(ActionEvent e)
-    	{
+    	{    		
     		stsMensagem.setText("Mensagem: selecione a cor do contorno");
-    		Color ret = JColorChooser.showDialog(this.component, "Cor do contorno", corContorno);
+    		Color ret = JColorChooser.showDialog(this.component, "Cor Contorno", corContorno);
     		
     		if (ret == null) {
     			corContorno = ret;
@@ -361,7 +375,7 @@ public class Janela extends JFrame
     	public void actionPerformed(ActionEvent e)
     	{
     		stsMensagem.setText("Mensagem: selecione a cor do interior");
-    		Color ret = JColorChooser.showDialog(this.component, "Cor do interior", corInterior, true);
+    		Color ret = JColorChooser.showDialog(this.component, "Cor Interior", corInterior, true);
     		
     		if (ret != null) {
     			corInterior = ret;
