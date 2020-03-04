@@ -9,17 +9,12 @@ public class Elipse extends Figura
 	
     public Elipse (int x1, int y1, int x2, int y2)
     {
-    	this (x1, y1, x2, y2, Color.BLACK, Color.BLACK);
+    	this(x1, y1, x2, y2, Color.BLACK);
     }
     
     public Elipse (int x1, int y1, int x2, int y2, Color corContorno)
     {
-	    super(corContorno);
-	
-	    this.p1 = new Ponto(x1, y1);
-	    this.p2 = new Ponto(x2, y2);
-	    
-	    this.corInterior = Color.BLACK;
+	    this(x1, y1, x2, y2, corContorno, new Color(255, 255, 255, 0));
     }
     
     public Elipse (int x1, int y1, int x2, int y2, Color corContorno, Color corInterior)
@@ -70,7 +65,7 @@ public class Elipse extends Figura
         this.p2 = new Ponto(x, y);
     }
     
-    public void setcorInterior(Color corInterior)
+    public void setCorInterior(Color corInterior)
     {
     	this.corInterior = corInterior;
     }
@@ -98,8 +93,10 @@ public class Elipse extends Figura
     	int largura = Math.max(this.p1.getX(), this.p2.getX()) - x;
 		int altura = Math.max(this.p1.getY(), this.p2.getY()) - y;
     	
-        g.setColor(this.corInterior);
-        g.fillOval(x, y, largura + 1, altura + 1);
+		if (this.corInterior.getAlpha() == 255) {
+			g.setColor(this.corInterior);
+		    g.fillOval(x, y, largura + 1, altura + 1);
+		}
 		
         g.setColor(this.corContorno);
         g.drawOval(x, y, largura, altura);

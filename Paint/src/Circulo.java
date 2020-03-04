@@ -5,12 +5,12 @@ public class Circulo extends Elipse {
 	
 	public Circulo (int x1, int y1, int x2, int y2)
     {
-    	super(x1, y1, x2, y2, Color.BLACK, Color.BLACK);
+    	super(x1, y1, x2, y2);
     }
     
     public Circulo (int x1, int y1, int x2, int y2, Color corContorno)
     {
-	    super(x1, y1, x2, y2, corContorno, Color.BLACK);
+	    super(x1, y1, x2, y2, corContorno);
     }
     
     public Circulo (int x1, int y1, int x2, int y2, Color corContorno, Color corInterior)
@@ -33,8 +33,10 @@ public class Circulo extends Elipse {
     	
 		int tamanho = Math.min(largura, altura);
 		
-        g.setColor(this.corInterior);
-        g.fillOval(x, y, tamanho + 1, tamanho + 1);
+		if (this.corInterior.getAlpha() == 255) {
+	        g.setColor(this.corInterior);
+	        g.fillOval(x, y, tamanho + 1, tamanho + 1);
+		}
 		
         g.setColor(this.corContorno);
         g.drawOval(x, y, tamanho, tamanho);

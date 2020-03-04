@@ -28,7 +28,7 @@ public class Janela extends JFrame
     protected Acao acao = Acao.Nenhuma;
 
     protected Color corContorno = Color.BLACK;
-    protected Color corInterior = Color.BLACK;
+    protected Color corInterior = Color.LIGHT_GRAY;
     
     protected Ponto p1;
     
@@ -340,7 +340,12 @@ public class Janela extends JFrame
     	public void actionPerformed(ActionEvent e)
     	{
     		stsMensagem.setText("Mensagem: selecione a cor do contorno");
-    		corContorno = JColorChooser.showDialog(this.component, "Cor do contorno", corContorno);
+    		Color ret = JColorChooser.showDialog(this.component, "Cor do contorno", corContorno);
+    		
+    		if (ret == null) {
+    			corContorno = ret;
+    		}
+    		
     		stsMensagem.setText("Mensagem: ");
     	}
     }
@@ -356,8 +361,19 @@ public class Janela extends JFrame
     	public void actionPerformed(ActionEvent e)
     	{
     		stsMensagem.setText("Mensagem: selecione a cor do interior");
-    		corInterior = JColorChooser.showDialog(this.component, "Cor do interior", corInterior);
-    		stsMensagem.setText("Mensagem: ");
+    		Color ret = JColorChooser.showDialog(this.component, "Cor do interior", corInterior, true);
+    		
+    		if (ret != null) {
+    			corInterior = ret;
+    		}
+    		
+    		if (corInterior.getAlpha() > 0 && corInterior.getAlpha() < 255) {
+    			corInterior = new Color(corInterior.getRed(), corInterior.getGreen(), corInterior.getBlue(), 0);
+        		stsMensagem.setText("Mensagem: somente a transparência total é suportada");
+    		}
+    		else {
+    			stsMensagem.setText("Mensagem: ");
+    		}
     	}
     }
 
