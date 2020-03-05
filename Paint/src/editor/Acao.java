@@ -1,3 +1,4 @@
+package editor;
 public enum Acao {
 	Nenhuma,
 	Ponto,

@@ -1,9 +1,11 @@
+package editor;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
 import java.util.*;
+import figuras.*;
 
 public class Janela extends JFrame 
 {
@@ -209,6 +211,9 @@ public class Janela extends JFrame
                               implements MouseListener,
                                          MouseMotionListener
     {
+
+	private static final long serialVersionUID = 1L;
+
 	public MeuJPanel()
         {
             super();
