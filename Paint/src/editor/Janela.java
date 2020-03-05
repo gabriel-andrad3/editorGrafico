@@ -342,7 +342,7 @@ public class Janela extends JFrame
     }
     
     protected class AbreMenuCores extends MouseAdapter {
-        public void mouseReleased(MouseEvent e) {
+        public void mouseClicked(MouseEvent e) {
         	mnuCores.show(e.getComponent(), e.getX(), e.getY());
         }
     }
