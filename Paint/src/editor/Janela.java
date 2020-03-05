@@ -45,7 +45,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnPontoImg = ImageIO.read(getClass().getResource("../resources/ponto.jpg"));
+            Image btnPontoImg = ImageIO.read(getClass().getResource("/resources/ponto.jpg"));
             btnPonto.setIcon(new ImageIcon(btnPontoImg));
         }
         catch (IOException e)
@@ -58,7 +58,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnLinhaImg = ImageIO.read(getClass().getResource("../resources/linha.jpg"));
+            Image btnLinhaImg = ImageIO.read(getClass().getResource("/resources/linha.jpg"));
             btnLinha.setIcon(new ImageIcon(btnLinhaImg));
         }
         catch (IOException e)
@@ -71,7 +71,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnCirculoImg = ImageIO.read(getClass().getResource("../resources/circulo.jpg"));
+            Image btnCirculoImg = ImageIO.read(getClass().getResource("/resources/circulo.jpg"));
             btnCirculo.setIcon(new ImageIcon(btnCirculoImg));
         }
         catch (IOException e)
@@ -84,7 +84,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnElipseImg = ImageIO.read(getClass().getResource("../resources/elipse.jpg"));
+            Image btnElipseImg = ImageIO.read(getClass().getResource("/resources/elipse.jpg"));
             btnElipse.setIcon(new ImageIcon(btnElipseImg));
         }
         catch (IOException e)
@@ -97,7 +97,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnCoresImg = ImageIO.read(getClass().getResource("../resources/cores.jpg"));
+            Image btnCoresImg = ImageIO.read(getClass().getResource("/resources/cores.jpg"));
             btnCores.setIcon(new ImageIcon(btnCoresImg));
         }
         catch (IOException e)
@@ -110,7 +110,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnAbrirImg = ImageIO.read(getClass().getResource("../resources/abrir.jpg"));
+            Image btnAbrirImg = ImageIO.read(getClass().getResource("/resources/abrir.jpg"));
             btnAbrir.setIcon(new ImageIcon(btnAbrirImg));
         }
         catch (IOException e)
@@ -123,7 +123,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnSalvarImg = ImageIO.read(getClass().getResource("../resources/salvar.jpg"));
+            Image btnSalvarImg = ImageIO.read(getClass().getResource("/resources/salvar.jpg"));
             btnSalvar.setIcon(new ImageIcon(btnSalvarImg));
         }
         catch (IOException e)
@@ -136,7 +136,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnApagarImg = ImageIO.read(getClass().getResource("../resources/apagar.jpg"));
+            Image btnApagarImg = ImageIO.read(getClass().getResource("/resources/apagar.jpg"));
             btnApagar.setIcon(new ImageIcon(btnApagarImg));
         }
         catch (IOException e)
@@ -149,7 +149,7 @@ public class Janela extends JFrame
 
         try
         {
-            Image btnSairImg = ImageIO.read(getClass().getResource("../resources/sair.jpg"));
+            Image btnSairImg = ImageIO.read(getClass().getResource("/resources/sair.jpg"));
             btnSair.setIcon(new ImageIcon(btnSairImg));
         }
         catch (IOException e)
