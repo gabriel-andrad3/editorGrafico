@@ -43,6 +43,7 @@ public class Circulo extends Elipse {
         g.drawOval(x, y, tamanho, tamanho);
     }
 
+    // TODO: Revisar quando implementar carregamento de arquivo
     public String toString()
     {
         return "c:" +

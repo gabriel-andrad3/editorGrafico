@@ -28,6 +28,7 @@ public class Elipse extends Figura
 	    this.corInterior = corInterior;
     }
     
+    // TODO: Revisar quando implementar carregamento de arquivo
     public Elipse (String s)
     {
         StringTokenizer quebrador = new StringTokenizer(s,":");
@@ -103,6 +104,7 @@ public class Elipse extends Figura
         g.drawOval(x, y, largura, altura);
     }
 
+    // TODO: Revisar quando implementar carregamento de arquivo
     public String toString()
     {
         return "e:" +

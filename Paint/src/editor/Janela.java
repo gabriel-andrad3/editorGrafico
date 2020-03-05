@@ -41,122 +41,121 @@ public class Janela extends JFrame
     protected Vector<Figura> figuras = new Vector<Figura>();
 
     public Janela ()
-    {
-        super("Editor GrÃ¡fico");
+    {        super("Editor Gráfico");
 
         try
         {
-            Image btnPontoImg = ImageIO.read(getClass().getResource("resources/ponto.jpg"));
+            Image btnPontoImg = ImageIO.read(getClass().getResource("../resources/ponto.jpg"));
             btnPonto.setIcon(new ImageIcon(btnPontoImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo ponto.jpg nÃ£o foi encontrado",
+                                           "Arquivo ponto.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
 
         try
         {
-            Image btnLinhaImg = ImageIO.read(getClass().getResource("resources/linha.jpg"));
+            Image btnLinhaImg = ImageIO.read(getClass().getResource("../resources/linha.jpg"));
             btnLinha.setIcon(new ImageIcon(btnLinhaImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo linha.jpg nÃ£o foi encontrado",
+                                           "Arquivo linha.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
 
         try
         {
-            Image btnCirculoImg = ImageIO.read(getClass().getResource("resources/circulo.jpg"));
+            Image btnCirculoImg = ImageIO.read(getClass().getResource("../resources/circulo.jpg"));
             btnCirculo.setIcon(new ImageIcon(btnCirculoImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo circulo.jpg nÃ£o foi encontrado",
+                                           "Arquivo circulo.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
 
         try
         {
-            Image btnElipseImg = ImageIO.read(getClass().getResource("resources/elipse.jpg"));
+            Image btnElipseImg = ImageIO.read(getClass().getResource("../resources/elipse.jpg"));
             btnElipse.setIcon(new ImageIcon(btnElipseImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo elipse.jpg nÃ£o foi encontrado",
+                                           "Arquivo elipse.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
 
         try
         {
-            Image btnCoresImg = ImageIO.read(getClass().getResource("resources/cores.jpg"));
+            Image btnCoresImg = ImageIO.read(getClass().getResource("../resources/cores.jpg"));
             btnCores.setIcon(new ImageIcon(btnCoresImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo cores.jpg nÃ£o foi encontrado",
+                                           "Arquivo cores.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
 
         try
         {
-            Image btnAbrirImg = ImageIO.read(getClass().getResource("resources/abrir.jpg"));
+            Image btnAbrirImg = ImageIO.read(getClass().getResource("../resources/abrir.jpg"));
             btnAbrir.setIcon(new ImageIcon(btnAbrirImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo abrir.jpg nÃ£o foi encontrado",
+                                           "Arquivo abrir.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
 
         try
         {
-            Image btnSalvarImg = ImageIO.read(getClass().getResource("resources/salvar.jpg"));
+            Image btnSalvarImg = ImageIO.read(getClass().getResource("../resources/salvar.jpg"));
             btnSalvar.setIcon(new ImageIcon(btnSalvarImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo salvar.jpg nÃ£o foi encontrado",
+                                           "Arquivo salvar.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
 
         try
         {
-            Image btnApagarImg = ImageIO.read(getClass().getResource("resources/apagar.jpg"));
+            Image btnApagarImg = ImageIO.read(getClass().getResource("../resources/apagar.jpg"));
             btnApagar.setIcon(new ImageIcon(btnApagarImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo apagar.jpg nÃ£o foi encontrado",
+                                           "Arquivo apagar.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
 
         try
         {
-            Image btnSairImg = ImageIO.read(getClass().getResource("resources/sair.jpg"));
+            Image btnSairImg = ImageIO.read(getClass().getResource("../resources/sair.jpg"));
             btnSair.setIcon(new ImageIcon(btnSairImg));
         }
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo sair.jpg nÃ£o foi encontrado",
+                                           "Arquivo sair.jpg não foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -388,7 +387,7 @@ public class Janela extends JFrame
     		
     		if (corInterior.getAlpha() > 0 && corInterior.getAlpha() < 255) {
     			corInterior = new Color(corInterior.getRed(), corInterior.getGreen(), corInterior.getBlue(), 0);
-        		stsMensagem.setText("Mensagem: somente a transparÃªncia total Ã© suportada");
+        		stsMensagem.setText("Mensagem: somente a transparência total é suportada");
     		}
     		else {
     			stsMensagem.setText("Mensagem: ");
