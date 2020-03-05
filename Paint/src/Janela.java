@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
 import java.util.*;
- 
+
 public class Janela extends JFrame 
 {
     protected static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class Janela extends JFrame
 
     public Janela ()
     {
-        super("Editor Gráfico");
+        super("Editor GrÃ¡fico");
 
         try
         {
@@ -50,7 +50,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo ponto.jpg não foi encontrado",
+                                           "Arquivo ponto.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -63,7 +63,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo linha.jpg não foi encontrado",
+                                           "Arquivo linha.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -76,7 +76,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo circulo.jpg não foi encontrado",
+                                           "Arquivo circulo.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -89,7 +89,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo elipse.jpg não foi encontrado",
+                                           "Arquivo elipse.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -102,7 +102,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo cores.jpg não foi encontrado",
+                                           "Arquivo cores.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -115,7 +115,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo abrir.jpg não foi encontrado",
+                                           "Arquivo abrir.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -128,7 +128,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo salvar.jpg não foi encontrado",
+                                           "Arquivo salvar.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -141,7 +141,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo apagar.jpg não foi encontrado",
+                                           "Arquivo apagar.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -154,7 +154,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo sair.jpg não foi encontrado",
+                                           "Arquivo sair.jpg nÃ£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -324,7 +324,7 @@ public class Janela extends JFrame
     	public void actionPerformed(ActionEvent e)
     	{
     		acao = Acao.InicioCirculo;
-    		stsMensagem.setText("Mensagem: clique no ponto inicial do círculo");
+    		stsMensagem.setText("Mensagem: clique no ponto inicial do cÃ­rculo");
     	}
     }
     
@@ -383,7 +383,7 @@ public class Janela extends JFrame
     		
     		if (corInterior.getAlpha() > 0 && corInterior.getAlpha() < 255) {
     			corInterior = new Color(corInterior.getRed(), corInterior.getGreen(), corInterior.getBlue(), 0);
-        		stsMensagem.setText("Mensagem: somente a transparência total é suportada");
+        		stsMensagem.setText("Mensagem: somente a transparÃªncia total Ã© suportada");
     		}
     		else {
     			stsMensagem.setText("Mensagem: ");
