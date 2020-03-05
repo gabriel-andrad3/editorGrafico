@@ -360,7 +360,7 @@ public class Janela extends JFrame
     		stsMensagem.setText("Mensagem: selecione a cor do contorno");
     		Color ret = JColorChooser.showDialog(this.component, "Cor Contorno", corContorno);
     		
-    		if (ret == null) {
+    		if (ret != null) {
     			corContorno = ret;
     		}
     		
