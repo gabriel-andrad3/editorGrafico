@@ -7,5 +7,9 @@ public enum Acao {
 	InicioCirculo,
 	FimCirculo,
 	InicioElipse,
-	FimElipse
+	FimElipse,
+	InicioQuadrado,
+	FimQuadrado,
+	InicioRetangulo,
+	FimRetangulo
 }

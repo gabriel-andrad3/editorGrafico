@@ -11,15 +11,17 @@ public class Janela extends JFrame
 {
     protected static final long serialVersionUID = 1L;
 
-    protected JButton btnPonto   = new JButton("Ponto"),
-                      btnLinha   = new JButton("Linha"),
-                      btnCirculo = new JButton("Circulo"),
-                      btnElipse  = new JButton("Elipse"),
-                      btnCores   = new JButton("Cores"),
-                      btnAbrir   = new JButton("Abrir"),
-                      btnSalvar  = new JButton("Salvar"),
-                      btnApagar  = new JButton("Apagar"),
-                      btnSair    = new JButton("Sair");
+    protected JButton btnPonto     = new JButton("Ponto"),
+                      btnLinha     = new JButton("Linha"),
+                      btnCirculo   = new JButton("Círculo"),
+                      btnElipse    = new JButton("Elipse"),
+                      btnQuadrado  = new JButton("Quadrado"),
+                      btnRetangulo = new JButton("Retângulo"),
+                      btnCores     = new JButton("Cores"),
+                      btnAbrir     = new JButton("Abrir"),
+                      btnSalvar    = new JButton("Salvar"),
+                      btnApagar    = new JButton("Apagar"),
+                      btnSair      = new JButton("Sair");
 
     protected MeuJPanel pnlDesenho = new MeuJPanel ();
     
@@ -86,6 +88,32 @@ public class Janela extends JFrame
         {
             Image btnElipseImg = ImageIO.read(getClass().getResource("/resources/elipse.jpg"));
             btnElipse.setIcon(new ImageIcon(btnElipseImg));
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog (null,
+                                           "Arquivo elipse.jpg não foi encontrado",
+                                           "Arquivo de imagem ausente",
+                                           JOptionPane.WARNING_MESSAGE);
+        }
+        
+        try
+        {
+            Image btnQuadradoImg = ImageIO.read(getClass().getResource("/resources/quadrado.jpg"));
+            btnQuadrado.setIcon(new ImageIcon(btnQuadradoImg));
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog (null,
+                                           "Arquivo elipse.jpg não foi encontrado",
+                                           "Arquivo de imagem ausente",
+                                           JOptionPane.WARNING_MESSAGE);
+        }
+        
+        try
+        {
+            Image btnRetanguloImg = ImageIO.read(getClass().getResource("/resources/retangulo.jpg"));
+            btnRetangulo.setIcon(new ImageIcon(btnRetanguloImg));
         }
         catch (IOException e)
         {
@@ -164,6 +192,8 @@ public class Janela extends JFrame
         btnLinha.addActionListener(new DesenhoDeReta ());
         btnCirculo.addActionListener(new DesenhoDeCirculo());
         btnElipse.addActionListener(new DesenhoDeElipse());
+        btnQuadrado.addActionListener(new DesenhoDeQuadrado());
+        btnRetangulo.addActionListener(new DesenhoDeRetangulo());
         
         btnCores.addMouseListener(new AbreMenuCores());
         
@@ -180,6 +210,8 @@ public class Janela extends JFrame
         pnlBotoes.add (btnLinha);
         pnlBotoes.add (btnCirculo);
         pnlBotoes.add (btnElipse);
+        pnlBotoes.add (btnQuadrado);
+        pnlBotoes.add (btnRetangulo);
         pnlBotoes.add (btnCores);
         pnlBotoes.add (btnApagar);
         pnlBotoes.add (btnSair);
@@ -202,7 +234,7 @@ public class Janela extends JFrame
         
         this.addWindowListener (new FechamentoDeJanela());
 
-        this.setSize (850,500);
+        this.setSize (1200,500);
         this.setVisible (true);
     }
 
@@ -268,6 +300,30 @@ public class Janela extends JFrame
         		
         	case FimElipse:
         		figuras.add(new Elipse(p1.getX(), p1.getY(), e.getX(), e.getY(), corContorno, corInterior));
+        		figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
+        		limparAcao();
+        		break;
+        	
+        	case InicioQuadrado:
+        		p1 = new Ponto(e.getX(), e.getY());
+        		acao = Acao.FimQuadrado;
+        		stsMensagem.setText("Mensagem: clique o ponto final do quadrado");
+        		break;
+        		
+        	case FimQuadrado:
+        		figuras.add(new Quadrado(p1.getX(), p1.getY(), e.getX(), e.getY(), corContorno, corInterior));
+        		figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
+        		limparAcao();
+        		break;
+        		
+        	case InicioRetangulo:
+        		p1 = new Ponto(e.getX(), e.getY());
+        		acao = Acao.FimRetangulo;
+        		stsMensagem.setText("Mensagem: clique o ponto final do retângulo");
+        		break;
+        		
+        	case FimRetangulo:
+        		figuras.add(new Retangulo(p1.getX(), p1.getY(), e.getX(), e.getY(), corContorno, corInterior));
         		figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
         		limparAcao();
         		break;
@@ -341,6 +397,24 @@ public class Janela extends JFrame
     	}
     }
     
+    protected class DesenhoDeQuadrado implements ActionListener
+    {
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		acao = Acao.InicioQuadrado;
+    		stsMensagem.setText("Mensagem: clique no ponto inicial do quadrado");
+    	}
+    }
+    
+    protected class DesenhoDeRetangulo implements ActionListener
+    {
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		acao = Acao.InicioRetangulo;
+    		stsMensagem.setText("Mensagem: clique no ponto inicial do retangulo");
+    	}
+    }
+    
     protected class AbreMenuCores extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
         	mnuCores.show(e.getComponent(), e.getX(), e.getY());
@@ -364,7 +438,13 @@ public class Janela extends JFrame
     			corContorno = ret;
     		}
     		
-    		stsMensagem.setText("Mensagem: ");
+    		if (corContorno.getAlpha() < 255) {
+    			corContorno = new Color(corContorno.getRed(), corContorno.getGreen(), corContorno.getBlue(), 255);
+        		stsMensagem.setText("Mensagem: transparência não é suportada no contorno");
+    		}
+    		else {
+    			stsMensagem.setText("Mensagem: ");
+    		}    		
     	}
     }
     
@@ -379,7 +459,7 @@ public class Janela extends JFrame
     	public void actionPerformed(ActionEvent e)
     	{
     		stsMensagem.setText("Mensagem: selecione a cor do interior");
-    		Color ret = JColorChooser.showDialog(this.component, "Cor Interior", corInterior, true);
+    		Color ret = JColorChooser.showDialog(this.component, "Cor Interior", corInterior);
     		
     		if (ret != null) {
     			corInterior = ret;
