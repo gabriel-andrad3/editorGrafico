@@ -5,7 +5,9 @@ import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
 import java.util.*;
+
 import figuras.*;
+import say.swing.JFontChooser;
 
 public class Janela extends JFrame 
 {
@@ -13,11 +15,13 @@ public class Janela extends JFrame
 
     protected JButton btnPonto     = new JButton("Ponto"),
                       btnLinha     = new JButton("Linha"),
-                      btnCirculo   = new JButton("CÌrculo"),
+                      btnCirculo   = new JButton("C√≠rculo"),
                       btnElipse    = new JButton("Elipse"),
                       btnQuadrado  = new JButton("Quadrado"),
-                      btnRetangulo = new JButton("Ret‚ngulo"),
+                      btnRetangulo = new JButton("Ret√¢ngulo"),
+                      btnTexto     = new JButton("Texto"),
                       btnCores     = new JButton("Cores"),
+                      btnFonte     = new JButton("Fonte"),
                       btnAbrir     = new JButton("Abrir"),
                       btnSalvar    = new JButton("Salvar"),
                       btnApagar    = new JButton("Apagar"),
@@ -37,13 +41,18 @@ public class Janela extends JFrame
 
     protected Color corContorno = Color.BLACK;
     protected Color corInterior = Color.LIGHT_GRAY;
-    
+
+    protected Font fonte = new Font("Arial", Font.PLAIN, 12);
+
     protected Ponto p1;
+
+    protected Texto texto;
     
     protected Vector<Figura> figuras = new Vector<Figura>();
 
     public Janela ()
-    {        super("Editor Gr·fico");
+    {
+        super("Editor Gr√°fico");
 
         try
         {
@@ -53,7 +62,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo ponto.jpg n„o foi encontrado",
+                                           "Arquivo ponto.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -66,7 +75,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo linha.jpg n„o foi encontrado",
+                                           "Arquivo linha.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -79,7 +88,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo circulo.jpg n„o foi encontrado",
+                                           "Arquivo circulo.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -92,7 +101,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo elipse.jpg n„o foi encontrado",
+                                           "Arquivo elipse.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -105,7 +114,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo elipse.jpg n„o foi encontrado",
+                                           "Arquivo elipse.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -118,7 +127,20 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo elipse.jpg n„o foi encontrado",
+                                           "Arquivo elipse.jpg n√£o foi encontrado",
+                                           "Arquivo de imagem ausente",
+                                           JOptionPane.WARNING_MESSAGE);
+        }
+
+        try
+        {
+            Image btnTextoImg = ImageIO.read(getClass().getResource("/resources/texto.jpg"));
+            btnTexto.setIcon(new ImageIcon(btnTextoImg));
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog (null,
+                                           "Arquivo cores.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -131,9 +153,22 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo cores.jpg n„o foi encontrado",
-                                           "Arquivo de imagem ausente",
-                                           JOptionPane.WARNING_MESSAGE);
+                    "Arquivo cores.jpg n√£o foi encontrado",
+                    "Arquivo de imagem ausente",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
+        try
+        {
+            Image btnFonteImg = ImageIO.read(getClass().getResource("/resources/fonte.jpg"));
+            btnFonte.setIcon(new ImageIcon(btnFonteImg));
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog (null,
+                    "Arquivo cores.jpg n√£o foi encontrado",
+                    "Arquivo de imagem ausente",
+                    JOptionPane.WARNING_MESSAGE);
         }
 
         try
@@ -144,7 +179,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo abrir.jpg n„o foi encontrado",
+                                           "Arquivo abrir.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -157,7 +192,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo salvar.jpg n„o foi encontrado",
+                                           "Arquivo salvar.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -170,7 +205,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo apagar.jpg n„o foi encontrado",
+                                           "Arquivo apagar.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -183,7 +218,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo sair.jpg n„o foi encontrado",
+                                           "Arquivo sair.jpg n√£o foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -194,8 +229,11 @@ public class Janela extends JFrame
         btnElipse.addActionListener(new DesenhoDeElipse());
         btnQuadrado.addActionListener(new DesenhoDeQuadrado());
         btnRetangulo.addActionListener(new DesenhoDeRetangulo());
+        btnTexto.addActionListener(new DesenhoDeTexto());
         
         btnCores.addMouseListener(new AbreMenuCores());
+
+        btnFonte.addActionListener(new SelecionaFonte(this));
         
         itmCorContorno.addActionListener(new SelecionaCorContorno(this));
         itmCorInterior.addActionListener(new SelecionaCorInterior(this));
@@ -212,7 +250,9 @@ public class Janela extends JFrame
         pnlBotoes.add (btnElipse);
         pnlBotoes.add (btnQuadrado);
         pnlBotoes.add (btnRetangulo);
+        pnlBotoes.add (btnTexto);
         pnlBotoes.add (btnCores);
+        pnlBotoes.add (btnFonte);
         pnlBotoes.add (btnApagar);
         pnlBotoes.add (btnSair);
         
@@ -240,7 +280,8 @@ public class Janela extends JFrame
 
     protected class MeuJPanel extends    JPanel 
                               implements MouseListener,
-                                         MouseMotionListener
+                                         MouseMotionListener,
+                                         KeyListener
     {
 
 	private static final long serialVersionUID = 1L;
@@ -251,12 +292,13 @@ public class Janela extends JFrame
 
             this.addMouseListener       (this);
             this.addMouseMotionListener (this);
+            this.addKeyListener         (this);
+            this.setFocusable(true);
         }
 
         public void paint (Graphics g)
         {
-            for (int i=0 ; i<figuras.size(); i++)
-                figuras.get(i).torneSeVisivel(g);
+            for (Figura figura : figuras) figura.torneSeVisivel(g);
         }
         
         public void mousePressed (MouseEvent e)
@@ -319,7 +361,7 @@ public class Janela extends JFrame
         	case InicioRetangulo:
         		p1 = new Ponto(e.getX(), e.getY());
         		acao = Acao.FimRetangulo;
-        		stsMensagem.setText("Mensagem: clique o ponto final do ret‚ngulo");
+        		stsMensagem.setText("Mensagem: clique o ponto final do ret√¢ngulo");
         		break;
         		
         	case FimRetangulo:
@@ -327,7 +369,15 @@ public class Janela extends JFrame
         		figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
         		limparAcao();
         		break;
-        		
+
+            case InicioTexto:
+                texto = new Texto(e.getX(), e.getY(), "", corContorno, fonte);
+                figuras.add(texto);
+                acao = Acao.MeioTexto;
+                stsMensagem.setText("Mensagem: pressione [ENTER] ou [TAB] ou clique para finalizar o texto");
+                pnlDesenho.grabFocus();
+                break;
+
         	default:
         		limparAcao();
         		break;
@@ -353,10 +403,36 @@ public class Janela extends JFrame
         {
             stsCoordenada.setText("Coordenada: "+e.getX()+","+e.getY());
         }
-        
-        private void limparAcao() 
+
+        public void keyTyped(KeyEvent keyEvent) {
+	        if (acao == Acao.MeioTexto) {
+                switch (keyEvent.getKeyChar()) {
+                    case '\b':
+                        if (texto.getTexto().length() > 0) {
+                            texto.setTexto(texto.getTexto().substring(0, texto.getTexto().length() - 1));
+                            new Retangulo(0, 0, 1920, 1080, this.getBackground(), this.getBackground()).torneSeVisivel(pnlDesenho.getGraphics());
+                            for (Figura figura : figuras) figura.torneSeVisivel(pnlDesenho.getGraphics());
+                        }
+                        break;
+
+                    case '\n':
+                        limparAcao();
+                        break;
+
+                    default:
+                        texto.setTexto(texto.getTexto() + keyEvent.getKeyChar());
+                        texto.torneSeVisivel(this.getGraphics());
+                }
+            }
+        }
+
+        public void keyPressed(KeyEvent keyEvent) { }
+
+        public void keyReleased(KeyEvent keyEvent) { }
+
+        private void limparAcao()
         {
-        	acao = Acao.Nenhuma;
+            acao = Acao.Nenhuma;
             stsMensagem.setText("Mensagem: ");
         }
     }
@@ -411,8 +487,39 @@ public class Janela extends JFrame
     	public void actionPerformed(ActionEvent e)
     	{
     		acao = Acao.InicioRetangulo;
-    		stsMensagem.setText("Mensagem: clique no ponto inicial do retangulo");
+    		stsMensagem.setText("Mensagem: clique no ponto inicial do ret√¢ngulo");
     	}
+    }
+
+    protected class DesenhoDeTexto implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            acao = Acao.InicioTexto;
+            stsMensagem.setText("Mensagem: clique no ponto inicial do texto");
+        }
+    }
+
+    protected class SelecionaFonte implements ActionListener
+    {
+        private Component component;
+
+        public SelecionaFonte(Component component)
+        {
+            this.component = component;
+        }
+
+        public void actionPerformed(ActionEvent e)
+        {
+            stsMensagem.setText("Mensagem: selecione a fonte");
+            JFontChooser fontChooser = new JFontChooser();
+            fontChooser.setSelectedFont(fonte);
+
+            if (fontChooser.showDialog(component) == 1)
+                fonte = fontChooser.getSelectedFont();
+
+            stsMensagem.setText("Mensagem: ");
+        }
     }
     
     protected class AbreMenuCores extends MouseAdapter {
@@ -440,7 +547,7 @@ public class Janela extends JFrame
     		
     		if (corContorno.getAlpha() < 255) {
     			corContorno = new Color(corContorno.getRed(), corContorno.getGreen(), corContorno.getBlue(), 255);
-        		stsMensagem.setText("Mensagem: transparÍncia n„o È suportada no contorno");
+        		stsMensagem.setText("Mensagem: transpar√™ncia n√£o √© suportada no contorno");
     		}
     		else {
     			stsMensagem.setText("Mensagem: ");
@@ -467,7 +574,7 @@ public class Janela extends JFrame
     		
     		if (corInterior.getAlpha() > 0 && corInterior.getAlpha() < 255) {
     			corInterior = new Color(corInterior.getRed(), corInterior.getGreen(), corInterior.getBlue(), 0);
-        		stsMensagem.setText("Mensagem: somente a transparÍncia total È suportada");
+        		stsMensagem.setText("Mensagem: somente a transpar√¢ncia total √© suportada");
     		}
     		else {
     			stsMensagem.setText("Mensagem: ");
@@ -475,7 +582,7 @@ public class Janela extends JFrame
     	}
     }
 
-    protected class FechamentoDeJanela extends WindowAdapter
+    protected static class FechamentoDeJanela extends WindowAdapter
     {
         public void windowClosing (WindowEvent e)
         {
