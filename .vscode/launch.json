@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TestePoligono",
+            "request": "launch",
+            "mainClass": "editor.TestePoligono",
+            "projectName": "editorGrafico_58a667e3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Editor",
+            "request": "launch",
+            "mainClass": "editor.Editor",
+            "projectName": "editorGrafico_58a667e3"
+        },
+        {
+            "type": "java",
             "name": "PaintWS",
             "request": "launch",
             "mainClass": "Editor",

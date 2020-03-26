@@ -13,10 +13,11 @@ public class Janela extends JFrame
 
     protected JButton btnPonto     = new JButton("Ponto"),
                       btnLinha     = new JButton("Linha"),
-                      btnCirculo   = new JButton("CÌrculo"),
+                      btnCirculo   = new JButton("CÔøΩrculo"),
                       btnElipse    = new JButton("Elipse"),
                       btnQuadrado  = new JButton("Quadrado"),
-                      btnRetangulo = new JButton("Ret‚ngulo"),
+                      btnRetangulo = new JButton("RetÔøΩngulo"),
+                      btnPoligono  = new JButton("Pol√≠gono"),
                       btnCores     = new JButton("Cores"),
                       btnAbrir     = new JButton("Abrir"),
                       btnSalvar    = new JButton("Salvar"),
@@ -39,11 +40,14 @@ public class Janela extends JFrame
     protected Color corInterior = Color.LIGHT_GRAY;
     
     protected Ponto p1;
+
+    protected Poligono polig;
+    protected Linha ladoPolig;
     
     protected Vector<Figura> figuras = new Vector<Figura>();
 
     public Janela ()
-    {        super("Editor Gr·fico");
+    {        super("Editor GrÔøΩfico");
 
         try
         {
@@ -53,7 +57,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo ponto.jpg n„o foi encontrado",
+                                           "Arquivo ponto.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -66,7 +70,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo linha.jpg n„o foi encontrado",
+                                           "Arquivo linha.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -79,7 +83,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo circulo.jpg n„o foi encontrado",
+                                           "Arquivo circulo.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -92,7 +96,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo elipse.jpg n„o foi encontrado",
+                                           "Arquivo elipse.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -105,7 +109,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo elipse.jpg n„o foi encontrado",
+                                           "Arquivo quadrado.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -118,7 +122,20 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo elipse.jpg n„o foi encontrado",
+                                           "Arquivo retuangulo.jpg nÔøΩo foi encontrado",
+                                           "Arquivo de imagem ausente",
+                                           JOptionPane.WARNING_MESSAGE);
+        }
+
+        try
+        {
+            Image btnPoligonoImg = ImageIO.read(getClass().getResource("/resources/poligono.jpg"));
+            btnPoligono.setIcon(new ImageIcon(btnPoligonoImg));
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog (null,
+                                           "Arquivo poligono.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -131,7 +148,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo cores.jpg n„o foi encontrado",
+                                           "Arquivo cores.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -144,7 +161,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo abrir.jpg n„o foi encontrado",
+                                           "Arquivo abrir.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -157,7 +174,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo salvar.jpg n„o foi encontrado",
+                                           "Arquivo salvar.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -170,7 +187,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo apagar.jpg n„o foi encontrado",
+                                           "Arquivo apagar.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -183,7 +200,7 @@ public class Janela extends JFrame
         catch (IOException e)
         {
             JOptionPane.showMessageDialog (null,
-                                           "Arquivo sair.jpg n„o foi encontrado",
+                                           "Arquivo sair.jpg nÔøΩo foi encontrado",
                                            "Arquivo de imagem ausente",
                                            JOptionPane.WARNING_MESSAGE);
         }
@@ -194,6 +211,7 @@ public class Janela extends JFrame
         btnElipse.addActionListener(new DesenhoDeElipse());
         btnQuadrado.addActionListener(new DesenhoDeQuadrado());
         btnRetangulo.addActionListener(new DesenhoDeRetangulo());
+        btnPoligono.addActionListener(new DesenhoDePoligono());
         
         btnCores.addMouseListener(new AbreMenuCores());
         
@@ -212,6 +230,7 @@ public class Janela extends JFrame
         pnlBotoes.add (btnElipse);
         pnlBotoes.add (btnQuadrado);
         pnlBotoes.add (btnRetangulo);
+        pnlBotoes.add (btnPoligono);
         pnlBotoes.add (btnCores);
         pnlBotoes.add (btnApagar);
         pnlBotoes.add (btnSair);
@@ -234,7 +253,7 @@ public class Janela extends JFrame
         
         this.addWindowListener (new FechamentoDeJanela());
 
-        this.setSize (1200,500);
+        this.setSize (1400,500);
         this.setVisible (true);
     }
 
@@ -319,7 +338,7 @@ public class Janela extends JFrame
         	case InicioRetangulo:
         		p1 = new Ponto(e.getX(), e.getY());
         		acao = Acao.FimRetangulo;
-        		stsMensagem.setText("Mensagem: clique o ponto final do ret‚ngulo");
+        		stsMensagem.setText("Mensagem: clique o ponto final do retÔøΩngulo");
         		break;
         		
         	case FimRetangulo:
@@ -327,7 +346,37 @@ public class Janela extends JFrame
         		figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
         		limparAcao();
         		break;
+                
+            case InicioPoligono:
+                p1 = new Ponto(e.getX(), e.getY());
+                polig = new Poligono();
+                acao = Acao.DurantePoligono;
+                itmCorContorno.setEnabled(false);
+        		stsMensagem.setText("Mensagem: clique o ponto final desse lado do pol√≠gono");
+        		break;
         		
+            case DurantePoligono:
+                ladoPolig = new Linha(p1.getX(), p1.getY(), e.getX(), e.getY(), corContorno);
+                polig.adicionaLados(ladoPolig);
+
+                // FimPoligono
+                if (polig.getQtdLados() >= 3 && e.getX() == polig.getPrimeiroPonto().getX() && e.getY() == polig.getPrimeiroPonto().getY()) {  // FIXME: mudar para pegar uma √°rea proxima
+                    polig.setCorInterior(corInterior);  // testar 
+                    figuras.add(polig);
+                    figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
+                    limparAcao();
+                    itmCorContorno.setEnabled(true);   //FIXME: cuidado qnd mudarem de figura no meio
+                }   
+                else {
+                    figuras.add (ladoPolig);    // FIXME: adicionar polig e n√£o lado
+                    figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());     
+                    figuras.remove(figuras.size()-1);
+                    p1.setX(e.getX());
+                    p1.setY(e.getY());
+                    stsMensagem.setText("Mensagem: clique o ponto final desse lado do pol√≠gono");
+                }
+                break;
+
         	default:
         		limparAcao();
         		break;
@@ -414,7 +463,15 @@ public class Janela extends JFrame
     		stsMensagem.setText("Mensagem: clique no ponto inicial do retangulo");
     	}
     }
-    
+    protected class DesenhoDePoligono implements ActionListener
+    {
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		acao = Acao.InicioPoligono;
+    		stsMensagem.setText("Mensagem: clique no ponto inicial do pol√≠gono");
+    	}
+    }
+
     protected class AbreMenuCores extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
         	mnuCores.show(e.getComponent(), e.getX(), e.getY());
@@ -440,7 +497,7 @@ public class Janela extends JFrame
     		
     		if (corContorno.getAlpha() < 255) {
     			corContorno = new Color(corContorno.getRed(), corContorno.getGreen(), corContorno.getBlue(), 255);
-        		stsMensagem.setText("Mensagem: transparÍncia n„o È suportada no contorno");
+        		stsMensagem.setText("Mensagem: transparÔøΩncia nÔøΩo ÔøΩ suportada no contorno");
     		}
     		else {
     			stsMensagem.setText("Mensagem: ");
@@ -467,7 +524,7 @@ public class Janela extends JFrame
     		
     		if (corInterior.getAlpha() > 0 && corInterior.getAlpha() < 255) {
     			corInterior = new Color(corInterior.getRed(), corInterior.getGreen(), corInterior.getBlue(), 0);
-        		stsMensagem.setText("Mensagem: somente a transparÍncia total È suportada");
+        		stsMensagem.setText("Mensagem: somente a transparÔøΩncia total ÔøΩ suportada");
     		}
     		else {
     			stsMensagem.setText("Mensagem: ");

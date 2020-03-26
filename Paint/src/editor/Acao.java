@@ -11,5 +11,7 @@ public enum Acao {
 	InicioQuadrado,
 	FimQuadrado,
 	InicioRetangulo,
-	FimRetangulo
+	FimRetangulo,
+	InicioPoligono,
+	DurantePoligono
 }
