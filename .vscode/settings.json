@@ -5,5 +5,6 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "java.checkstyle.configuration": "${workspaceFolder}\\checkstyle.xml"
+    "java.checkstyle.configuration": "${workspaceFolder}\\checkstyle.xml",
+    "editor.formatOnSave": false
 }

@@ -571,7 +571,7 @@ public class Janela extends JFrame
             JFontChooser fontChooser = new JFontChooser();
             fontChooser.setSelectedFont(fonte);
 
-            if (fontChooser.showDialog(component) == 1)
+            if (fontChooser.showDialog(component) == 0)
                 fonte = fontChooser.getSelectedFont();
 
             stsMensagem.setText("Mensagem: ");
