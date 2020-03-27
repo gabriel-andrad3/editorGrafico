@@ -13,5 +13,7 @@ public enum Acao {
 	InicioRetangulo,
 	FimRetangulo,
 	InicioPoligono,
-	DurantePoligono
+	DurantePoligono,
+	InicioTexto,
+	MeioTexto,
 }
