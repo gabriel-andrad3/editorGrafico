@@ -8,6 +8,13 @@
             "type": "java",
             "name": "CodeLens (Launch) - TestePoligono",
             "request": "launch",
+            "mainClass": "TestePoligono",
+            "projectName": "editorGrafico_58a667e3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestePoligono",
+            "request": "launch",
             "mainClass": "editor.TestePoligono",
             "projectName": "editorGrafico_58a667e3"
         },

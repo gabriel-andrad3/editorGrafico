@@ -49,6 +49,7 @@ public class Janela extends JFrame
 
     protected Poligono polig;
     protected Linha ladoPolig;
+
     protected Texto texto;
     
     protected Vector<Figura> figuras = new Vector<Figura>();
@@ -247,9 +248,7 @@ public class Janela extends JFrame
         btnRetangulo.addActionListener(new DesenhoDeRetangulo());
         btnPoligono.addActionListener(new DesenhoDePoligono());
         btnTexto.addActionListener(new DesenhoDeTexto());
-        
         btnCores.addMouseListener(new AbreMenuCores());
-
         btnFonte.addActionListener(new SelecionaFonte(this));
         
         itmCorContorno.addActionListener(new SelecionaCorContorno(this));
@@ -402,20 +401,19 @@ public class Janela extends JFrame
 
                 // FimPoligono
                 if (polig.getQtdLados() >= 3 && e.getX() == polig.getPrimeiroPonto().getX() && e.getY() == polig.getPrimeiroPonto().getY()) {  // FIXME: mudar para pegar uma área proxima
-                    polig.setCorInterior(corInterior);  // testar 
+                    polig.setCorInterior(corInterior);  // FIXME
                     figuras.add(polig);
-                    figuras.get(figuras.size() - 1).torneSeVisivel(pnlDesenho.getGraphics());
+                    polig.torneSeVisivel(pnlDesenho.getGraphics());
                     limparAcao();
-                    itmCorContorno.setEnabled(true);   //FIXME: cuidado qnd mudarem de figura no meio
+                    itmCorContorno.setEnabled(true);  
                 }   
-                else {
-                    figuras.add (ladoPolig);    // FIXME: adicionar polig e não lado
-                    figuras.get(figuras.size()-1).torneSeVisivel(pnlDesenho.getGraphics());     
-                    figuras.remove(figuras.size()-1);
+                else {                        
+                    polig.torneSeVisivel(pnlDesenho.getGraphics());     
                     p1.setX(e.getX());
                     p1.setY(e.getY());
                     stsMensagem.setText("Mensagem: clique o ponto final desse lado do polígono");
                 }
+                break;
 
             case InicioTexto:
                 texto = new Texto(e.getX(), e.getY(), "", corContorno, fonte);
@@ -545,7 +543,6 @@ public class Janela extends JFrame
     		stsMensagem.setText("Mensagem: clique no ponto inicial do polígono");
     	}
     }
-
 
     protected class DesenhoDeTexto implements ActionListener
     {

@@ -24,20 +24,24 @@ public class Poligono extends Figura
         return lados.firstElement().p1;
     }
 
-    // public boolean estaPertoPontoInicial(int outroX, int outroY) {
-    //     int xInicial  = this.getPrimeiroPonto().getX();
-    //     int yInicial  = this.getPrimeiroPonto().getY();
+    public boolean estaPertoPontoInicial(int outroX, int outroY) {  // FIXME
+        int xInicial  = this.getPrimeiroPonto().getX();
+        int yInicial  = this.getPrimeiroPonto().getY();
 
-    //     if (outroX - 10 >= xInicial || outroX + 10 <= xInicial)
-    //         if (outroY - 10 >= yInicial || outroY + 10 <= yInicial)
-    //             return true;
+        if (outroX - 10 >= xInicial || outroX + 10 <= xInicial)
+            if (outroY - 10 >= yInicial || outroY + 10 <= yInicial)
+                return true;
 
-    //     return false;
-    // }
+        return false;
+    }
 
     public Vector<Linha> getLados()
     {
         return this.lados;
+    }
+
+    private Linha getLado(int pos) {
+        return this.lados.elementAt(pos);
     }
 
     public void setCorInterior(Color corInterior)
@@ -50,13 +54,17 @@ public class Poligono extends Figura
     	return this.corInterior;
     }
 
-    // public Poligono (Color corContorno)
-    // {
-    //     super(corContorno);
+     public void torneSeVisivel (Graphics g)
+     {
+         g.setColor(this.corContorno);
 
-    //     this.p1 = new Ponto (x1, y1, corContorno);
-    //     this.p2 = new Ponto (x2, y2, corContorno);
-    // }
+         for (int i=0; i<this.lados.size(); i++) {
+            g.drawLine(getLado(i).p1.x,   
+                        getLado(i).p1.y,
+                        getLado(i).p2.x,
+                        getLado(i).p2.y);   
+        }
+     }
 
     // TODO implement
     public Poligono (String s)
@@ -75,33 +83,13 @@ public class Poligono extends Figura
                                Integer.parseInt(quebrador.nextToken()),  // G
                                Integer.parseInt(quebrador.nextToken())); // B
 
-        //this.p1  = new Ponto (x1,y1,corContorno);
-        //this.p2  = new Ponto (x2,y2,corContorno);
         this.corContorno = corContorno;
     }
-
-    // TODO implement
-    public void torneSeVisivel (Graphics g)
-    {
-        g.setColor(this.corContorno);
-        g.drawLine(this.lados.lastElement().p1.x,   //FIXME: percorrer lados e desenhar todas linhas
-                    this.lados.lastElement().p1.y,
-                    this.lados.lastElement().p2.x,
-                    this.lados.lastElement().p2.y);  
-    }
     
-
     // TODO implement
     public String toString()
     {
         return "r:" +
-            //    this.p1.getX() +
-            //    ":" +
-            //    this.p1.getY() +
-            //    ":" +
-            //    this.p2.getX() +
-            //    ":" +
-            //    this.p2.getY() +
                ":" +
                this.getCorContorno().getRed() +
                ":" +

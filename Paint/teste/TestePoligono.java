@@ -1,5 +1,3 @@
-package editor;
-
 import java.util.Iterator;
 
 import figuras.Linha;
@@ -15,6 +13,10 @@ public class TestePoligono {
         Iterator value = poli.getLados().iterator();
         while (value.hasNext()) { 
             System.out.println(value.next()); 
+        }
+
+        for (int i=0; i<poli.getQtdLados(); i++) {
+            //System.out.println(poli.getLado(i));
         }
         
         System.out.println(poli.getQtdLados());
