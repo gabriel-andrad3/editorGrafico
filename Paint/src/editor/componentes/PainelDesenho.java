@@ -186,6 +186,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 
             default:
                 limparAcao();
+                acao = Acao.InicioTexto;
                 break;
         }
     }
