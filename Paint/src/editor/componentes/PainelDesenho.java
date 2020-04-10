@@ -29,7 +29,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     private Color corInterior = Color.GRAY;
     private Color corContorno = Color.BLACK;
 
-    private Font fonte;
+    private Font fonte = new Font("Arial", Font.PLAIN, 24);
 
     public PainelDesenho(Janela janela) {
         super();
