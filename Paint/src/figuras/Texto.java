@@ -74,10 +74,10 @@ public class Texto extends Figura {
         g.drawString(this.texto, this.p1.getX(), this.p1.getY());
     }
 
-    // TODO: Revisar quando implementar carregamento de arquivo
+    // sem fonte enquanto está quebrada
     public String toString()
     {
-        return "e:" +
+        return "t:" +
                 this.p1.getX() +
                 ":" +
                 this.p1.getY() +
@@ -88,8 +88,9 @@ public class Texto extends Figura {
                 ":" +
                 this.getCorContorno().getBlue() +
                 ":" +
-                this.getTexto() +
-                ":" +
-                this.getFonte().getName();
+                this.getTexto() //+
+                // ":" +
+                // this.getFonte().getName()
+                ;
     }
 }

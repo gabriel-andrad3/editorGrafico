@@ -69,7 +69,7 @@ public class Linha extends Figura
 
     public String toString()
     {
-        return "r:" +
+        return "l:" +
                this.p1.getX() +
                ":" +
                this.p1.getY() +

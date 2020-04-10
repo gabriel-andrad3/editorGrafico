@@ -54,6 +54,10 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         return this.fonte;
     }
 
+    public Vector<Figura> getFiguras() {
+        return this.figuras;
+    }
+
     public void setAcao(Acao acao) {
         this.acao = acao;
     }
@@ -93,6 +97,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 figuras.add(new Linha(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno));
                 figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
                 limparAcao();
+                acao = Acao.InicioReta;
                 break;
 
             case InicioCirculo:
@@ -105,6 +110,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 figuras.add(new Circulo(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior));
                 figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
                 limparAcao();
+                acao = Acao.InicioCirculo;
                 break;
 
             case InicioElipse:
@@ -117,6 +123,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 figuras.add(new Elipse(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior));
                 figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
                 limparAcao();
+                acao = Acao.InicioElipse;
                 break;
 
             case InicioQuadrado:
@@ -129,6 +136,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 figuras.add(new Quadrado(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior));
                 figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
                 limparAcao();
+                acao = Acao.InicioQuadrado;
                 break;
 
             case InicioRetangulo:
@@ -141,6 +149,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 figuras.add(new Retangulo(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior));
                 figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
                 limparAcao();
+                acao = Acao.InicioRetangulo;
                 break;
 
             case InicioPoligono:
@@ -181,6 +190,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 
             default:
                 limparAcao();
+                acao = Acao.InicioTexto;
                 break;
         }
     }
