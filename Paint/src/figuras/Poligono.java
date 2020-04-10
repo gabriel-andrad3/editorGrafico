@@ -86,15 +86,16 @@ public class Poligono extends Figura
         this.corContorno = corContorno;
     }
     
-    // TODO implement
+    // printando um conjunto de linhas
     public String toString()
     {
-        return "r:" +
-               ":" +
-               this.getCorContorno().getRed() +
-               ":" +
-               this.getCorContorno().getGreen() +
-               ":" +
-               this.getCorContorno().getBlue();
+        String ret = "";
+        
+        for (int i=0; i<this.lados.size(); i++) {
+            ret +=  getLado(i).toString();
+            ret += "\n";
+        }
+
+        return ret;
     }
 }

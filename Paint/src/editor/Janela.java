@@ -54,7 +54,7 @@ public class Janela extends JFrame {
 
     protected Texto texto;
 
-    protected Vector<Figura> figuras = new Vector<Figura>();
+    //protected Vector<Figura> figuras = new Vector<Figura>();
 
     public Janela() {
         super("Editor Gráfico");
@@ -171,6 +171,7 @@ public class Janela extends JFrame {
                     JOptionPane.WARNING_MESSAGE);
         }
 
+        btnSalvar.addActionListener(new SalvarDesenho(this));
         btnPonto.addActionListener(new DesenhoDePonto(this));
         btnLinha.addActionListener(new DesenhoDeReta(this));
         btnCirculo.addActionListener(new DesenhoDeCirculo(this));
@@ -201,7 +202,7 @@ public class Janela extends JFrame {
         pnlBotoes.add(btnTexto);
         pnlBotoes.add(btnCores);
         pnlBotoes.add(btnFonte);
-        pnlBotoes.add(btnApagar);
+        //pnlBotoes.add(btnApagar);
         pnlBotoes.add(btnSair);
 
         mnuCores.add(itmCorContorno);

@@ -104,10 +104,9 @@ public class Retangulo extends Figura
         g.drawRect(x, y, largura, altura);
     }
 
-    // TODO: Revisar quando implementar carregamento de arquivo
     public String toString()
     {
-        return "e:" +
+        return "r:" +
                this.p1.getX() +
                ":" +
                this.p1.getY() +
