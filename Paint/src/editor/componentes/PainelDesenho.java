@@ -85,6 +85,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                 figuras.add(new Ponto(e.getX(), e.getY(), corContorno));
                 figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
                 limparAcao();
+                acao = Acao.Ponto;
                 break;
 
             case InicioReta:
