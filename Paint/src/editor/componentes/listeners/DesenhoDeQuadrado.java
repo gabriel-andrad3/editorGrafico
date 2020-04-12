@@ -12,6 +12,6 @@ public class DesenhoDeQuadrado extends EditorActionListener {
 
     public void actionPerformed(ActionEvent e) {
         this.janela.getPainelDesenho().setAcao(Acao.InicioQuadrado);
-        this.janela.setMensagem("clique no ponto inicial do quadrado");
+        this.janela.setMensagem("clique e arraste para desenhar o quadrado");
     }
 }

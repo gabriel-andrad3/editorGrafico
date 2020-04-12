@@ -12,6 +12,6 @@ public class DesenhoDeCirculo extends EditorActionListener {
 
     public void actionPerformed(ActionEvent e) {
         this.janela.getPainelDesenho().setAcao(Acao.InicioCirculo);
-        this.janela.setMensagem("clique no ponto inicial do círculo");
+        this.janela.setMensagem("clique e arraste para desenhar o círculo");
     }
 }

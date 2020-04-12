@@ -26,19 +26,28 @@ public class Circulo extends Elipse {
     
     public void torneSeVisivel(Graphics g)
     {
-    	int x = Math.min(this.p1.getX(), this.p2.getX());
-    	int y = Math.min(this.p1.getY(), this.p2.getY());
-    	
-    	int largura = Math.max(this.p1.getX(), this.p2.getX()) - x;
-		int altura = Math.max(this.p1.getY(), this.p2.getY()) - y;
-    	
-		int tamanho = Math.min(largura, altura);
-		
-		if (this.corInterior.getAlpha() == 255) {
+        int x, y;
+
+        int largura = Math.abs(this.p1.getX() - this.p2.getX());
+        int altura = Math.abs(this.p1.getY() - this.p2.getY());
+
+        int tamanho = Math.min(altura, largura);
+
+        if (this.p1.getX() < this.p2.getX())
+            x = p1.getX();
+        else
+            x = p1.getX() - tamanho;
+
+        if (this.p1.getY() < this.p2.getY())
+            y = p1.getY();
+        else
+            y = p1.getY() - tamanho;  
+
+        if (this.corInterior.getAlpha() == 255) {
 	        g.setColor(this.corInterior);
 	        g.fillOval(x, y, tamanho + 1, tamanho + 1);
-		}
-		
+        }
+
         g.setColor(this.corContorno);
         g.drawOval(x, y, tamanho, tamanho);
     }

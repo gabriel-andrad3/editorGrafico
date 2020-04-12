@@ -1,5 +1,6 @@
 package editor.componentes;
 
+import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -26,10 +27,14 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     private Linha ladoPolig;
     private Texto texto;
 
+    private Figura figuraDesenhada;
+
     private Color corInterior = Color.GRAY;
     private Color corContorno = Color.BLACK;
 
     private Font fonte = new Font("Arial", Font.PLAIN, 24);
+
+    private BufferedImage bufferDeImagem;
 
     public PainelDesenho(Janela janela) {
         super();
@@ -75,81 +80,51 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void paint(Graphics g) {
-        for (Figura figura : figuras)
+        if (figuras.size() > 0) {
+            for (Figura figura : figuras)
             figura.torneSeVisivel(g);
+        }
     }
 
     public void mousePressed(MouseEvent e) {
+        criarBufferDeFiguras();
+
         switch (acao) {
             case Ponto:
                 figuras.add(new Ponto(e.getX(), e.getY(), corContorno));
                 figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
-                limparAcao();
+                acao = Acao.Ponto;
+                this.janela.setMensagem("clique no local do ponto desejado");
                 break;
-
+            
             case InicioReta:
                 ponto = new Ponto(e.getX(), e.getY(), corContorno);
                 acao = Acao.FimReta;
-                this.janela.setMensagem("clique o ponto final da reta");
-                break;
-
-            case FimReta:
-                figuras.add(new Linha(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno));
-                figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
-                limparAcao();
-                acao = Acao.InicioReta;
+                this.janela.setMensagem("solte para finalizar a reta");
                 break;
 
             case InicioCirculo:
                 ponto = new Ponto(e.getX(), e.getY());
                 acao = Acao.FimCirculo;
-                this.janela.setMensagem("clique o ponto final do circulo");
-                break;
-
-            case FimCirculo:
-                figuras.add(new Circulo(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior));
-                figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
-                limparAcao();
-                acao = Acao.InicioCirculo;
+                this.janela.setMensagem("solte para finalizar o círculo");
                 break;
 
             case InicioElipse:
                 ponto = new Ponto(e.getX(), e.getY());
                 acao = Acao.FimElipse;
-                this.janela.setMensagem("clique o ponto final da elipse");
-                break;
-
-            case FimElipse:
-                figuras.add(new Elipse(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior));
-                figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
-                limparAcao();
-                acao = Acao.InicioElipse;
+                this.janela.setMensagem("solte para finalizar a elipse");
                 break;
 
             case InicioQuadrado:
                 ponto = new Ponto(e.getX(), e.getY());
                 acao = Acao.FimQuadrado;
-                this.janela.setMensagem("clique o ponto final do quadrado");
-                break;
-
-            case FimQuadrado:
-                figuras.add(new Quadrado(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior));
-                figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
-                limparAcao();
-                acao = Acao.InicioQuadrado;
+                this.janela.setMensagem("solte para finalizar o quadrado");
                 break;
 
             case InicioRetangulo:
                 ponto = new Ponto(e.getX(), e.getY());
                 acao = Acao.FimRetangulo;
-                this.janela.setMensagem("clique o ponto final do retângulo");
-                break;
-
-            case FimRetangulo:
-                figuras.add(new Retangulo(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior));
-                figuras.get(figuras.size() - 1).torneSeVisivel(this.getGraphics());
-                limparAcao();
-                acao = Acao.InicioRetangulo;
+                this.janela.setMensagem("solte para finalizar o retângulo");
                 break;
 
             case InicioPoligono:
@@ -169,7 +144,8 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
                     polig.setCorInterior(corInterior); // FIXME
                     figuras.add(polig);
                     polig.torneSeVisivel(this.getGraphics());
-                    limparAcao();
+                    acao = Acao.InicioPoligono;
+                    this.janela.setMensagem("clique no ponto inicial do polígono");
                 } else {
                     polig.torneSeVisivel(this.getGraphics());
                     ponto.setX(e.getX());
@@ -180,22 +156,61 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 
             case InicioTexto:
                 texto = new Texto(e.getX(), e.getY(), "", corContorno, fonte);
+
                 figuras.add(texto);
 
                 acao = Acao.MeioTexto;
 
-                this.janela.setMensagem("pressione [ENTER] ou [TAB] ou clique para finalizar o texto");
+                this.janela.setMensagem("pressione [ENTER] para finalizar o texto");
                 this.grabFocus();
                 break;
 
             default:
-                limparAcao();
-                acao = Acao.InicioTexto;
                 break;
         }
     }
 
     public void mouseReleased(MouseEvent e) {
+        switch (acao) {
+            case FimReta:
+                acao = Acao.InicioReta;
+
+                this.janela.setMensagem("clique e arraste para desenhar a reta");
+                break;
+
+            case FimCirculo:
+                acao = Acao.InicioCirculo;
+
+                this.janela.setMensagem("clique e arraste para desenhar o círculo");
+                break;
+
+            case FimElipse:
+                acao = Acao.InicioElipse;
+
+                this.janela.setMensagem("clique e arraste para desenhar a elipse");
+                break;
+
+            case FimQuadrado:
+                acao = Acao.InicioQuadrado;
+
+                this.janela.setMensagem("clique e arraste para desenhar o quadrado");
+                break;
+
+            case FimRetangulo:
+                acao = Acao.InicioRetangulo;
+
+                this.janela.setMensagem("clique e arraste para desenhar o retângulo");
+                break;
+
+            default:
+                break;
+        }
+
+        if (figuraDesenhada != null) {
+            figuras.add(figuraDesenhada);
+        }
+        
+        figuraDesenhada = null;
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -208,6 +223,36 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     }
 
     public void mouseDragged(MouseEvent e) {
+        switch (acao) {
+            case FimReta:
+                figuraDesenhada = new Linha(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno);
+                break;
+
+            case FimCirculo:
+                figuraDesenhada = new Circulo(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior);
+                break;
+
+            case FimElipse:
+                figuraDesenhada = new Elipse(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior);
+                break;
+
+            case FimQuadrado:
+                figuraDesenhada = new Quadrado(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno,
+                        corInterior);
+                break;
+
+            case FimRetangulo:
+                figuraDesenhada = new Retangulo(ponto.getX(), ponto.getY(), e.getX(), e.getY(), corContorno, corInterior);
+                break;
+
+            default:
+                break;
+        }
+        
+        if (figuraDesenhada != null) {
+            desenharBufferDeFiguras();
+            figuraDesenhada.torneSeVisivel(this.getGraphics());
+        }
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -217,23 +262,24 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     public void keyTyped(KeyEvent keyEvent) {
         if (acao == Acao.MeioTexto) {
             switch (keyEvent.getKeyChar()) {
-                case '\b':
-                    if (texto.getTexto().length() > 0) {
-                        texto.setTexto(texto.getTexto().substring(0, texto.getTexto().length() - 1));
-                        new Retangulo(0, 0, 1920, 1080, this.getBackground(), this.getBackground())
-                                .torneSeVisivel(this.getGraphics());
-                        for (Figura figura : figuras)
-                            figura.torneSeVisivel(this.getGraphics());
-                    }
-                    break;
-
-                case '\n':
+                case '\n':  // Enter
                     limparAcao();
                     break;
 
+                case '\b':  // Apagar
+                    if (texto.getTexto().length() > 0) {
+                        texto.setTexto(texto.getTexto().substring(0, texto.getTexto().length() - 1));
+
+                        desenharBufferDeFiguras();
+                        texto.torneSeVisivel(this.getGraphics());
+                    }
+                    break;
+
                 default:
-                    texto.setTexto(texto.getTexto() + keyEvent.getKeyChar());
-                    texto.torneSeVisivel(this.getGraphics());
+                    if (!keyEvent.isActionKey() && keyEvent.getModifiersEx() != InputEvent.CTRL_DOWN_MASK) {
+                        texto.setTexto(texto.getTexto() + keyEvent.getKeyChar());
+                        texto.torneSeVisivel(this.getGraphics());
+                    }
             }
         }
     }
@@ -247,5 +293,25 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
     private void limparAcao() {
         acao = Acao.Nenhuma;
         this.janela.setMensagem("");
+    }
+
+    private void criarBufferDeFiguras() {
+        BufferedImage imagem = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graficos = imagem.createGraphics();
+
+        new Retangulo(0, 0, 1920, 1080, this.getBackground(), this.getBackground()).torneSeVisivel(graficos);
+        
+        if (figuras.size() > 0) {
+            for (Figura figura : figuras)
+                figura.torneSeVisivel(graficos);
+        }
+
+        graficos.dispose();
+
+        this.bufferDeImagem = imagem;
+    }
+
+    private void desenharBufferDeFiguras() {
+        this.getGraphics().drawImage(bufferDeImagem, 0, 0, this);
     }
 }
