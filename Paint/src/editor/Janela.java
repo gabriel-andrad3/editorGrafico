@@ -171,6 +171,7 @@ public class Janela extends JFrame {
                     JOptionPane.WARNING_MESSAGE);
         }
 
+        btnAbrir.addActionListener(new AbrirDesenho(this));
         btnSalvar.addActionListener(new SalvarDesenho(this));
         btnPonto.addActionListener(new DesenhoDePonto(this));
         btnLinha.addActionListener(new DesenhoDeReta(this));

@@ -23,7 +23,6 @@ public class Texto extends Figura {
         this.fonte = fonte;
     }
 
-    // TODO: Revisar quando implementar carregamento de arquivo
     public Texto (String s)
     {
         StringTokenizer quebrador = new StringTokenizer(s,":");
@@ -33,12 +32,12 @@ public class Texto extends Figura {
         int x1 = Integer.parseInt(quebrador.nextToken());
         int y1 = Integer.parseInt(quebrador.nextToken());
 
-        String texto = quebrador.nextToken();
-
         Color corContorno = new Color(
                 Integer.parseInt(quebrador.nextToken()),
                 Integer.parseInt(quebrador.nextToken()),
                 Integer.parseInt(quebrador.nextToken()));
+
+        String texto = quebrador.nextToken();
 
         Font fonte = Font.getFont(quebrador.nextToken());
 
@@ -74,7 +73,6 @@ public class Texto extends Figura {
         g.drawString(this.texto, this.p1.getX(), this.p1.getY());
     }
 
-    // sem fonte enquanto está quebrada
     public String toString()
     {
         return "t:" +
@@ -88,9 +86,8 @@ public class Texto extends Figura {
                 ":" +
                 this.getCorContorno().getBlue() +
                 ":" +
-                this.getTexto() //+
-                // ":" +
-                // this.getFonte().getName()
-                ;
+                this.getTexto() +
+                ":" +
+                this.getFonte().getName();
     }
 }

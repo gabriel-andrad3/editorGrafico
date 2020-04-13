@@ -58,6 +58,10 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
         return this.figuras;
     }
 
+    public void setFiguras(Vector<Figura> fig) {
+        this.figuras = fig;
+    }
+
     public void setAcao(Acao acao) {
         this.acao = acao;
     }

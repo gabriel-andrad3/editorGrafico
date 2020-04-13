@@ -24,7 +24,8 @@ public class Poligono extends Figura
         return lados.firstElement().p1;
     }
 
-    public boolean estaPertoPontoInicial(int outroX, int outroY) {  // FIXME
+    // FIXME
+    public boolean estaPertoPontoInicial(int outroX, int outroY) {  
         int xInicial  = this.getPrimeiroPonto().getX();
         int yInicial  = this.getPrimeiroPonto().getY();
 
@@ -66,25 +67,11 @@ public class Poligono extends Figura
         }
      }
 
-    // TODO implement
-    public Poligono (String s)
-    {
-        StringTokenizer quebrador = new StringTokenizer(s,":");
-
-        quebrador.nextToken();
-
-        int   x1  = Integer.parseInt(quebrador.nextToken());
-        int   y1  = Integer.parseInt(quebrador.nextToken());
-
-        int   x2  = Integer.parseInt(quebrador.nextToken());
-        int   y2  = Integer.parseInt(quebrador.nextToken());
-
-        Color corContorno = new Color (Integer.parseInt(quebrador.nextToken()),  // R
-                               Integer.parseInt(quebrador.nextToken()),  // G
-                               Integer.parseInt(quebrador.nextToken())); // B
-
-        this.corContorno = corContorno;
-    }
+    // não necessário pois esta representando o polígono como um conjunto de linhas
+    // public Poligono (String s)
+    // {
+      
+    // }
     
     // printando um conjunto de linhas
     public String toString()
@@ -93,7 +80,8 @@ public class Poligono extends Figura
         
         for (int i=0; i<this.lados.size(); i++) {
             ret +=  getLado(i).toString();
-            ret += "\n";
+            if (i != this.lados.size()-1)
+                ret += "\n";
         }
 
         return ret;
