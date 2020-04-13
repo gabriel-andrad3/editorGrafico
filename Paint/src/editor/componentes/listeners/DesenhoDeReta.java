@@ -12,6 +12,6 @@ public class DesenhoDeReta extends EditorActionListener {
 
     public void actionPerformed(ActionEvent e) {
         this.janela.getPainelDesenho().setAcao(Acao.InicioReta);
-        this.janela.setMensagem("clique no ponto inicial da reta");
+        this.janela.setMensagem("clique e arraste para desenhar a reta");
     }
 }
