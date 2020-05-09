@@ -9,7 +9,7 @@ import editor.componentes.listeners.*;
 
 import javax.imageio.*;
 import java.io.*;
-import java.util.*;
+import java.net.Socket;
 
 import figuras.*;
 
@@ -58,6 +58,15 @@ public class Janela extends JFrame {
 
     public Janela() {
         super("Editor Gráfico");
+
+        Comunicado comunicado;
+
+        try {
+            Socket cliente = new Socket("localhost", 12345);
+        }
+        catch (Exception e) {
+            System.out.println("Erro:" + e.getMessage());
+        }
 
         try {
             Image btnPontoImg = ImageIO.read(getClass().getResource("/resources/ponto.jpg"));
