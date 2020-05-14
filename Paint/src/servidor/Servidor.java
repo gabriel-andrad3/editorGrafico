@@ -7,7 +7,7 @@ import java.net.Socket;
 public class Servidor {
     private static int porta = 12345;
 
-    private ServerSocket serverSocket;
+    private static ServerSocket serverSocket;
 
     private void criarServidor(int porta) throws IOException {
         serverSocket = new ServerSocket(porta);
@@ -20,10 +20,13 @@ public class Servidor {
 
     public static void main(String[] args) {
         try {
-            Servidor servidor = new Servidor();
-            servidor.criarServidor(porta);
-    
-            Socket cliente = servidor.esperaConexao();
+                Servidor servidor = new Servidor();
+                servidor.criarServidor(porta);
+        
+                while (true) {
+                Socket cliente = servidor.esperaConexao();
+                System.out.println("Cliente conectado");
+            }
         }
         catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import comunicacao.Comunicado;
 import editor.componentes.PainelDesenho;
 import editor.componentes.listeners.*;
 
@@ -63,6 +64,7 @@ public class Janela extends JFrame {
 
         try {
             Socket cliente = new Socket("localhost", 12345);
+            cliente.close(); // colocar quando fechar o editor
         }
         catch (Exception e) {
             System.out.println("Erro:" + e.getMessage());
