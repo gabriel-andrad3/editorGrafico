@@ -1,35 +1,25 @@
 package servidor;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.ArrayList;
 
-public class Servidor {
-    private static int porta = 12345;
+import comunicacao.AceitadoraDeConexao;
+import comunicacao.Parceiro;
 
-    private static ServerSocket serverSocket;
-
-    private void criarServidor(int porta) throws IOException {
-        serverSocket = new ServerSocket(porta);
-    }
-
-    private static Socket esperaConexao() throws IOException {
-        Socket socket = serverSocket.accept();
-        return socket;
-    }
+public class Servidor  {
+    private static String PORTA_PADRAO = "12345";
 
     public static void main(String[] args) {
+        ArrayList<Parceiro> clientes = new ArrayList<Parceiro>();
+
+        AceitadoraDeConexao aceitadoraDeConexao = null;
+
         try {
-                Servidor servidor = new Servidor();
-                servidor.criarServidor(porta);
-        
-                while (true) {
-                Socket cliente = servidor.esperaConexao();
-                System.out.println("Cliente conectado");
-            }
+            aceitadoraDeConexao = new AceitadoraDeConexao(PORTA_PADRAO, clientes);
+            aceitadoraDeConexao.start();
         }
-        catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+        catch (Exception erro) {
+            System.err.println ("Escolha uma porta apropriada e liberada para uso!\n");
+            return;
         }
     }
 }

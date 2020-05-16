@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import comunicacao.Comunicado;
+import comunicacao.EncerrarConexao;
+import comunicacao.Parceiro;
 import editor.componentes.PainelDesenho;
 import editor.componentes.listeners.*;
 
@@ -55,19 +56,53 @@ public class Janela extends JFrame {
 
     protected Texto texto;
 
+    public static final String HOST_PADRAO  = "localhost";
+    public static final int PORTA_PADRAO = 12345;
+
+    private Parceiro servidor = null;
+
     //protected Vector<Figura> figuras = new Vector<Figura>();
 
     public Janela() {
         super("Editor Gráfico");
 
-        Comunicado comunicado;
-
+        Socket conexao = null;
         try {
-            Socket cliente = new Socket("localhost", 12345);
-            cliente.close(); // colocar quando fechar o editor
+            String host = HOST_PADRAO;
+            int porta = PORTA_PADRAO;
+
+            conexao = new Socket(host, porta);
         }
-        catch (Exception e) {
-            System.out.println("Erro:" + e.getMessage());
+        catch (Exception erro) {
+            System.err.println ("Indique o servidor e a porta corretos!\n");
+            return;
+        }
+
+        ObjectOutputStream transmissor = null;
+        try {
+            transmissor = new ObjectOutputStream(conexao.getOutputStream());
+        }
+        catch (Exception erro) {
+            System.err.println ("Indique o servidor e a porta corretos!\n");
+            return;
+        }
+
+        ObjectInputStream receptor = null;
+        try {
+            receptor = new ObjectInputStream(conexao.getInputStream());
+        }
+        catch (Exception erro) {
+            System.err.println ("Indique o servidor e a porta corretos!\n");
+            return;
+        }
+
+        servidor = null;
+        try {
+            servidor = new Parceiro(conexao, receptor, transmissor);
+        }
+        catch (Exception erro) {
+            System.err.println ("Indique o servidor e a porta corretos!\n");
+            return;
         }
 
         try {
@@ -233,7 +268,7 @@ public class Janela extends JFrame {
         cntForm.add(pnlDesenho, BorderLayout.CENTER);
         cntForm.add(pnlStatus, BorderLayout.SOUTH);
 
-        this.addWindowListener(new FechamentoDeJanela());
+        this.addWindowListener(new FechamentoDeJanela(servidor));
 
         this.setSize(1400, 500);
         this.setVisible(true);
@@ -256,7 +291,22 @@ public class Janela extends JFrame {
     }
 
     protected static class FechamentoDeJanela extends WindowAdapter {
+        private Parceiro servidor;
+
+        FechamentoDeJanela(Parceiro servidor) {
+            this.servidor = servidor;
+        }
+
         public void windowClosing(WindowEvent e) {
+            EncerrarConexao encerrarConexao = new EncerrarConexao();
+
+            try {
+                this.servidor.receba(encerrarConexao);
+            }
+            catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+
             System.exit(0);
         }
     }
