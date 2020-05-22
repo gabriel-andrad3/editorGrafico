@@ -30,6 +30,7 @@ public class Janela extends JFrame {
     protected JButton btnFonte = new JButton("Fonte");
     protected JButton btnAbrir = new JButton("Abrir");
     protected JButton btnSalvar = new JButton("Salvar");
+    protected JButton btnSalvarServidor = new JButton("Salvar no Servidor");
     protected JButton btnApagar = new JButton("Apagar");
     protected JButton btnSair = new JButton("Sair");
 
@@ -219,6 +220,7 @@ public class Janela extends JFrame {
 
         btnAbrir.addActionListener(new AbrirDesenho(this));
         btnSalvar.addActionListener(new SalvarDesenho(this));
+        btnSalvarServidor.addActionListener(new SalvarDesenhoServidor(this));
         btnPonto.addActionListener(new DesenhoDePonto(this));
         btnLinha.addActionListener(new DesenhoDeReta(this));
         btnCirculo.addActionListener(new DesenhoDeCirculo(this));
@@ -239,6 +241,7 @@ public class Janela extends JFrame {
 
         pnlBotoes.add(btnAbrir);
         pnlBotoes.add(btnSalvar);
+        pnlBotoes.add(btnSalvarServidor);
         pnlBotoes.add(btnPonto);
         pnlBotoes.add(btnLinha);
         pnlBotoes.add(btnCirculo);
@@ -272,6 +275,10 @@ public class Janela extends JFrame {
 
         this.setSize(1400, 500);
         this.setVisible(true);
+    }
+
+    public Parceiro getServidor() {
+        return this.servidor;
     }
 
     public PainelDesenho getPainelDesenho() {

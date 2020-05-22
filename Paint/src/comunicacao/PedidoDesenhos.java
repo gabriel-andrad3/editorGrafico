@@ -1,6 +1,7 @@
 package comunicacao;
 
-public class PedidoDesenhos extends Comunicado {
+public class PedidoDesenhos implements Comunicado {
+    
     private static final long serialVersionUID = 1L;
 
     private String ipCliente; 

@@ -75,33 +75,47 @@ public class SupervisoraDeConexao extends Thread {
 					
                 }
                 else if (comunicado instanceof PedidoSalvamento) {
+                    System.out.println("Pedido de salvamento recebido do cliente " + cliente.getIp());
+
                     PedidoSalvamento pedidoSalvamento = (PedidoSalvamento)comunicado;
                     
                     database.Desenho desenho = null;
 
                     try {
-                        desenho = desenhoDAO.buscarDesenho(pedidoSalvamento.getIpCliente(), pedidoSalvamento.getNome());
+                        desenho = desenhoDAO.buscarDesenho(cliente.getIp(), pedidoSalvamento.getDesenho().getNome());
                     }
                     catch (Exception erro) {
                         throw erro;
                     }
 
                     if (desenho != null) {
-                        desenho.setConteudo(pedidoSalvamento.getDesenho().toString());
+                        System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' já existe para o cliente " + cliente.getIp() + " e será atualizado");
+
+                        desenho.setFiguras(pedidoSalvamento.getDesenho().getFiguras());
                         desenho.setDataUltimaAtualizacao(new Date());
                     }
                     else {
+                        System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' não existe para o cliente " + cliente.getIp() + " e será criado");
+
                         desenho = new database.Desenho();
 
-                        desenho.setIpCriador(pedidoSalvamento.getIpCliente());
-                        desenho.setNome(pedidoSalvamento.getNome());
-                        desenho.setConteudo(pedidoSalvamento.toString());
+                        desenho.setIpCriador(cliente.getIp());
+                        desenho.setNome(pedidoSalvamento.getDesenho().getNome());
+                        desenho.setFiguras(pedidoSalvamento.getDesenho().getFiguras());
                         desenho.setDataCriacao(new Date());
                         desenho.setDataUltimaAtualizacao(new Date());
                     }
 
+                    System.out.println("Conteúdo do desenho '" + pedidoSalvamento.getDesenho().getNome() + "' do cliente " + cliente.getIp());
+                        
+                    for (String figura : desenho.getFiguras()) {
+                        System.out.println(figura);
+                    }
+
                     try {
                         desenhoDAO.salvarDesenho(desenho);
+
+                        System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' do cliente " + cliente.getIp() + " foi salvo com sucesso");
                     }
                     catch (Exception erro) {
                         throw erro;

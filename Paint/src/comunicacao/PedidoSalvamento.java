@@ -1,25 +1,14 @@
 package comunicacao;
 
-public class PedidoSalvamento extends Comunicado{
-    private static final long serialVersionUID = 1L;
+public class PedidoSalvamento implements Comunicado{
+
+    private static final long serialVersionUID = 242220071685655080L;
     
-    private String ipCliente; 
-    private String nome;
     private Desenho desenho;
     
-    public PedidoSalvamento (String idCliente, String nome, Desenho des)
+    public PedidoSalvamento (Desenho des)
     {
-        this.ipCliente = idCliente;
-        this.nome = nome;
         this.desenho = des;
-    }
-    
-    public String getIpCliente() {
-        return this.ipCliente;
-    }
-    
-    public String getNome() {
-        return this.nome;
     }
 
     public Desenho getDesenho ()

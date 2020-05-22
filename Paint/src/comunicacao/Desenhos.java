@@ -2,9 +2,8 @@ package comunicacao;
 
 import java.util.ArrayList;
 
-public class Desenhos extends Comunicado {
-    private static final long serialVersionUID = 1L;
-    
+public class Desenhos {
+   
     private ArrayList<Desenho> desenhos;
     
     public Desenhos()

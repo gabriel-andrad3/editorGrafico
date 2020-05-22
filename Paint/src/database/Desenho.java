@@ -12,7 +12,7 @@ public class Desenho implements Serializable{
     private String ipCriador;
 	private Date dataCriacao;
 	private Date dataUltimaAtualizacao;
-    private String conteudo;
+    private List<String> figuras;
     
     public String getNome() {
         return this.nome;
@@ -30,8 +30,8 @@ public class Desenho implements Serializable{
         return this.dataUltimaAtualizacao;
     }
 
-    public String getConteudo() {
-        return this.conteudo;
+    public List<String> getFiguras() {
+        return this.figuras;
     }
 
     public void setNome(String nome) {
@@ -50,7 +50,7 @@ public class Desenho implements Serializable{
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
     }
 
-    public void setConteudo(String conteudo) {
-        this.conteudo = conteudo;
+    public void setFiguras(List<String> figuras) {
+        this.figuras = figuras;
     }
 }

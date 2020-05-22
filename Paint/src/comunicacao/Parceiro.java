@@ -77,4 +77,8 @@ public class Parceiro
             throw new Exception ("Erro de desconexao");
         }
     }
+
+    public String getIp() {
+        return (((InetSocketAddress) this.conexao.getRemoteSocketAddress()).getAddress()).toString();
+    }
 }
