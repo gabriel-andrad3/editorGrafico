@@ -4,6 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import database.DesenhoDAOMemoria;
+import database.IDesenhoDAO;
+
 public class SupervisoraDeConexao extends Thread {
     private double valor = 0;
 
@@ -11,6 +14,8 @@ public class SupervisoraDeConexao extends Thread {
     private Socket conexao;
 
     private ArrayList<Parceiro> clientes;
+
+    private IDesenhoDAO desenhoDAO;
 
     public SupervisoraDeConexao (Socket conexao, ArrayList<Parceiro> clientes) throws Exception {
         if (conexao == null)
@@ -21,6 +26,8 @@ public class SupervisoraDeConexao extends Thread {
 
         this.conexao  = conexao;
         this.clientes = clientes;
+
+        this.desenhoDAO = new DesenhoDAOMemoria();
     }
 
     public void run() {
@@ -68,7 +75,37 @@ public class SupervisoraDeConexao extends Thread {
 					
                 }
                 else if (comunicado instanceof PedidoSalvamento) {
+                    PedidoSalvamento pedidoSalvamento = (PedidoSalvamento)comunicado;
+                    
+                    database.Desenho desenho = null;
 
+                    try {
+                        desenho = desenhoDAO.buscarDesenho(pedidoSalvamento.getIpCliente(), pedidoSalvamento.getNome());
+                    }
+                    catch (Exception erro) {
+                        throw erro;
+                    }
+
+                    if (desenho != null) {
+                        desenho.setConteudo(pedidoSalvamento.getDesenho().toString());
+                        desenho.setDataUltimaAtualizacao(new Date());
+                    }
+                    else {
+                        desenho = new database.Desenho();
+
+                        desenho.setIpCriador(pedidoSalvamento.getIpCliente());
+                        desenho.setNome(pedidoSalvamento.getNome());
+                        desenho.setConteudo(pedidoSalvamento.toString());
+                        desenho.setDataCriacao(new Date());
+                        desenho.setDataUltimaAtualizacao(new Date());
+                    }
+
+                    try {
+                        desenhoDAO.salvarDesenho(desenho);
+                    }
+                    catch (Exception erro) {
+                        throw erro;
+                    }
                 }
                 else if (comunicado instanceof EncerrarConexao) {
                     synchronized (this.clientes) {
