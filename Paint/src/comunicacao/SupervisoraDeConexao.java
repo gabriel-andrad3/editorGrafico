@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import database.DesenhoDAO;
 import database.DesenhoDAOMemoria;
 import database.IDesenhoDAO;
 
@@ -27,7 +28,8 @@ public class SupervisoraDeConexao extends Thread {
         this.conexao  = conexao;
         this.clientes = clientes;
 
-        this.desenhoDAO = new DesenhoDAOMemoria();
+        //this.desenhoDAO = new DesenhoDAOMemoria();
+        this.desenhoDAO = new DesenhoDAO();
     }
 
     public void run() {
@@ -135,6 +137,7 @@ public class SupervisoraDeConexao extends Thread {
             try {
                 transmissor.close();
                 receptor.close();
+                System.out.println("Erro!");
             }
             catch (Exception falha) {} // so tentando fechar antes de acabar a thread
 

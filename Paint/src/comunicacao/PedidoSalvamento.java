@@ -1,6 +1,6 @@
 package comunicacao;
 
-public class PedidoSalvamento implements Comunicado{
+public class PedidoSalvamento implements Comunicado {
 
     private static final long serialVersionUID = 242220071685655080L;
     

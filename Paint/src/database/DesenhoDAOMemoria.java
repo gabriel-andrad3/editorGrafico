@@ -11,8 +11,6 @@ public class DesenhoDAOMemoria implements IDesenhoDAO {
         desenhos = new ArrayList<Desenho>();
     }
 
-
-
     @Override
     public Desenho buscarDesenho(String ipCriador, String nome) throws Exception {
         if (ipCriador == null || ipCriador == "")
@@ -45,6 +43,5 @@ public class DesenhoDAOMemoria implements IDesenhoDAO {
             desenhos.add(desenho);
         else
             desenhoExistente = desenho;
-
     }
 }
