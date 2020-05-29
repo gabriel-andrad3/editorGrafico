@@ -34,6 +34,17 @@ public class Desenho implements Serializable{
         return this.figuras;
     }
 
+    public String getFigurasString() {
+        String figurasString = "";
+
+        for (String figura : this.getFiguras()) {
+            figurasString += figura;
+            figurasString += "\n"; // para buscar espaço em branco na leitura
+        }
+        
+        return figurasString;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }

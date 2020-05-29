@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class ConexaoBD {
  
-    private static String driverName = "com.mysql.jdbc.Driver";                        
+    private static String driverName = "com.mysql.cj.jdbc.Driver";                        
     private static String serverName = "unigraphics-db.c0tvghz53ngd.sa-east-1.rds.amazonaws.com";  
     //String mydatabase = "";        
     private static String url = "jdbc:mysql://" + serverName; //+ "/" + mydatabase;

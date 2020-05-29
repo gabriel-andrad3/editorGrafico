@@ -47,12 +47,12 @@ public class DesenhoDAO implements IDesenhoDAO {
 
         if (desenhoExistente == null)
             try{
-                stmt = con.prepareStatement("INSERT INTO Editor.Desenhos (nome,ip_criador,data_criacao,data_ult_atualizacao,figuras VALUES (?,?,?,?,?,)");
+                stmt = con.prepareStatement("INSERT INTO Editor.Desenhos (nome,ip_criador,data_criacao,data_ult_atualizacao,figuras) VALUES (?,?,?,?,?)");
                 stmt.setString(1, desenho.getNome());
                 stmt.setString(2, desenho.getIpCriador());
-                stmt.setDate(3, (java.sql.Date) desenho.getDataCriacao());
-                stmt.setDate(4, (java.sql.Date) desenho.getDataUltimaAtualizacao());
-                stmt.setString(5, desenho.getFiguras().toString());
+                stmt.setDate(3, new java.sql.Date(desenho.getDataCriacao().getTime()));
+                stmt.setDate(4, new java.sql.Date(desenho.getDataUltimaAtualizacao().getTime()));
+                stmt.setString(5, desenho.getFigurasString());
 
                 stmt.executeUpdate();
             }
