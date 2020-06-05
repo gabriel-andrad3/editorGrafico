@@ -44,4 +44,10 @@ public class DesenhoDAOMemoria implements IDesenhoDAO {
         else
             desenhoExistente = desenho;
     }
+
+	@Override
+	public List<Desenho> buscarDesenhos(String ipCriador) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

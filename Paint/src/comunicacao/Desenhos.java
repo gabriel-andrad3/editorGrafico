@@ -2,7 +2,7 @@ package comunicacao;
 
 import java.util.ArrayList;
 
-public class Desenhos {
+public class Desenhos implements Comunicado{
    
     private ArrayList<Desenho> desenhos;
     

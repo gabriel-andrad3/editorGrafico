@@ -2,6 +2,7 @@ package comunicacao;
 
 import java.io.*;
 import java.net.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import database.DesenhoDAO;
@@ -74,7 +75,25 @@ public class SupervisoraDeConexao extends Thread {
                     return;
 
                 else if (comunicado instanceof PedidoDesenhos) {
-					
+                    System.out.println("Pedido de desenhos recebido do cliente " + cliente.getIp());
+
+                    List<database.Desenho> desenhos = new ArrayList<database.Desenho>();
+
+                    desenhos = desenhoDAO.buscarDesenhos(cliente.getIp());
+
+                    Desenhos comunicadoDesenhos = new Desenhos();
+
+                    for (database.Desenho desenhoDb : desenhos) {
+                        Desenho desenho = new Desenho(desenhoDb.getNome());
+
+                        for (String figura : desenhoDb.getFiguras()) {
+                            desenho.addFigura(figura);
+                        }
+
+                        comunicadoDesenhos.addDesenho(desenho);
+                    }
+
+                    cliente.receba(comunicadoDesenhos);
                 }
                 else if (comunicado instanceof PedidoSalvamento) {
                     System.out.println("Pedido de salvamento recebido do cliente " + cliente.getIp());
@@ -83,18 +102,13 @@ public class SupervisoraDeConexao extends Thread {
                     
                     database.Desenho desenho = null;
 
-                    try {
-                        desenho = desenhoDAO.buscarDesenho(cliente.getIp(), pedidoSalvamento.getDesenho().getNome());
-                    }
-                    catch (Exception erro) {
-                        throw erro;
-                    }
+                    desenho = desenhoDAO.buscarDesenho(cliente.getIp(), pedidoSalvamento.getDesenho().getNome());
 
                     if (desenho != null) {
                         System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' já existe para o cliente " + cliente.getIp() + " e será atualizado");
 
                         desenho.setFiguras(pedidoSalvamento.getDesenho().getFiguras());
-                        desenho.setDataUltimaAtualizacao(new Date());
+                        desenho.setDataUltimaAtualizacao(LocalDateTime.now());
                     }
                     else {
                         System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' não existe para o cliente " + cliente.getIp() + " e será criado");
@@ -104,8 +118,8 @@ public class SupervisoraDeConexao extends Thread {
                         desenho.setIpCriador(cliente.getIp());
                         desenho.setNome(pedidoSalvamento.getDesenho().getNome());
                         desenho.setFiguras(pedidoSalvamento.getDesenho().getFiguras());
-                        desenho.setDataCriacao(new Date());
-                        desenho.setDataUltimaAtualizacao(new Date());
+                        desenho.setDataCriacao(LocalDateTime.now());
+                        desenho.setDataUltimaAtualizacao(LocalDateTime.now());
                     }
 
                     System.out.println("Conteúdo do desenho '" + pedidoSalvamento.getDesenho().getNome() + "' do cliente " + cliente.getIp());
@@ -114,14 +128,9 @@ public class SupervisoraDeConexao extends Thread {
                         System.out.println(figura);
                     }
 
-                    try {
-                        desenhoDAO.salvarDesenho(desenho);
+                    desenhoDAO.salvarDesenho(desenho);
 
-                        System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' do cliente " + cliente.getIp() + " foi salvo com sucesso");
-                    }
-                    catch (Exception erro) {
-                        throw erro;
-                    }
+                    System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' do cliente " + cliente.getIp() + " foi salvo com sucesso");
                 }
                 else if (comunicado instanceof EncerrarConexao) {
                     synchronized (this.clientes) {

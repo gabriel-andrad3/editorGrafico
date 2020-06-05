@@ -1,7 +1,7 @@
 package database;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Desenho implements Serializable{
@@ -10,8 +10,8 @@ public class Desenho implements Serializable{
     
     private String nome;
     private String ipCriador;
-	private Date dataCriacao;
-	private Date dataUltimaAtualizacao;
+	private LocalDateTime dataCriacao;
+	private LocalDateTime dataUltimaAtualizacao;
     private List<String> figuras;
     
     public String getNome() {
@@ -22,11 +22,11 @@ public class Desenho implements Serializable{
         return this.ipCriador;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return this.dataCriacao;
     }
 
-    public Date getDataUltimaAtualizacao() {
+    public LocalDateTime getDataUltimaAtualizacao() {
         return this.dataUltimaAtualizacao;
     }
 
@@ -53,11 +53,11 @@ public class Desenho implements Serializable{
         this.ipCriador = ipCriador;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public void setDataUltimaAtualizacao(Date dataUltimaAtualizacao) {
+    public void setDataUltimaAtualizacao(LocalDateTime dataUltimaAtualizacao) {
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
     }
 
