@@ -119,7 +119,7 @@ public class DesenhoDAO implements IDesenhoDAO {
                 Desenho desenho = new Desenho();
 
                 desenho.setNome(rs.getString("nome"));
-                desenho.setIpCriador(rs.getString("ipCriador"));
+                desenho.setIpCriador(rs.getString("ip_criador"));
                 desenho.setDataCriacao(rs.getObject("data_criacao", LocalDateTime.class));
                 desenho.setDataUltimaAtualizacao(rs.getObject("data_ult_atualizacao", LocalDateTime.class));
 
