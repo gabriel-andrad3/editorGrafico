@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import database.DesenhoDAO;
-import database.DesenhoDAOMemoria;
 import database.IDesenhoDAO;
 
 public class SupervisoraDeConexao extends Thread {
@@ -29,7 +28,6 @@ public class SupervisoraDeConexao extends Thread {
         this.conexao  = conexao;
         this.clientes = clientes;
 
-        //this.desenhoDAO = new DesenhoDAOMemoria();
         this.desenhoDAO = new DesenhoDAO();
     }
 

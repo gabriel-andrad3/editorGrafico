@@ -1,16 +1,8 @@
 package editor.componentes.listeners;
 
 import java.awt.event.ActionEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Vector;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import comunicacao.PedidoSalvamento;
 import editor.Janela;

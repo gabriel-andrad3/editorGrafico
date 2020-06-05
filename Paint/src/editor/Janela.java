@@ -31,6 +31,7 @@ public class Janela extends JFrame {
     protected JButton btnAbrir = new JButton("Abrir");
     protected JButton btnSalvar = new JButton("Salvar");
     protected JButton btnSalvarServidor = new JButton("Salvar no Servidor");
+    protected JButton btnCarregarDoServidor = new JButton("Carregar do Servidor");
     protected JButton btnApagar = new JButton("Apagar");
     protected JButton btnSair = new JButton("Sair");
 
@@ -221,6 +222,7 @@ public class Janela extends JFrame {
         btnAbrir.addActionListener(new AbrirDesenho(this));
         btnSalvar.addActionListener(new SalvarDesenho(this));
         btnSalvarServidor.addActionListener(new SalvarDesenhoServidor(this));
+        btnCarregarDoServidor.addActionListener(new CarregarDesenhoDoServidor(this));
         btnPonto.addActionListener(new DesenhoDePonto(this));
         btnLinha.addActionListener(new DesenhoDeReta(this));
         btnCirculo.addActionListener(new DesenhoDeCirculo(this));
@@ -242,6 +244,7 @@ public class Janela extends JFrame {
         pnlBotoes.add(btnAbrir);
         pnlBotoes.add(btnSalvar);
         pnlBotoes.add(btnSalvarServidor);
+        pnlBotoes.add(btnCarregarDoServidor);
         pnlBotoes.add(btnPonto);
         pnlBotoes.add(btnLinha);
         pnlBotoes.add(btnCirculo);
