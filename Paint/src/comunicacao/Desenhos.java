@@ -25,4 +25,9 @@ public class Desenhos implements Comunicado{
 	{
 		return desenhos.get(i);
 	}
+
+	public ArrayList<Desenho> getDesenhos()
+	{
+		return desenhos;
+	}
 }
