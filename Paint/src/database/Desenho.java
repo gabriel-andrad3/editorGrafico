@@ -9,7 +9,7 @@ public class Desenho implements Serializable{
     private static final long serialVersionUID = 1L;
     
     private String nome;
-    private String ipCriador;
+    private String ipAtualizacao;
 	private LocalDateTime dataCriacao;
 	private LocalDateTime dataUltimaAtualizacao;
     private List<String> figuras;
@@ -18,8 +18,8 @@ public class Desenho implements Serializable{
         return this.nome;
     }
 
-    public String getIpCriador() {
-        return this.ipCriador;
+    public String getIpAtualizacao() {
+        return this.ipAtualizacao;
     }
 
     public LocalDateTime getDataCriacao() {
@@ -49,8 +49,8 @@ public class Desenho implements Serializable{
         this.nome = nome;
     }
 
-    public void setIpCriador(String ipCriador) {
-        this.ipCriador = ipCriador;
+    public void setIpAtualizacao(String ipAtualizacao) {
+        this.ipAtualizacao = ipAtualizacao;
     }
 
     public void setDataCriacao(LocalDateTime dataCriacao) {

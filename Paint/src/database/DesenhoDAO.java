@@ -13,10 +13,7 @@ public class DesenhoDAO implements IDesenhoDAO {
     public DesenhoDAO() { }
 
     @Override
-    public Desenho buscarDesenho(String ipCriador, String nome) throws Exception {
-        if (ipCriador == null || ipCriador == "")
-            throw new Exception("O IP do criador não pode ser vazio ou nulo");
-        
+    public Desenho buscarDesenho(String nome) throws Exception {       
         if (nome == null || nome == "")
             throw new Exception("O nome não pode ser vazio ou nulo");
 
@@ -24,10 +21,9 @@ public class DesenhoDAO implements IDesenhoDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        stmt = con.prepareStatement("SELECT nome, ip_criador, data_criacao, data_ult_atualizacao, figuras FROM Editor.Desenhos WHERE nome = ? AND ip_criador = ?");
+        stmt = con.prepareStatement("SELECT nome, ip_criador, data_criacao, data_ult_atualizacao, figuras FROM Editor.Desenhos WHERE nome = ?");
         
         stmt.setString(1, nome);
-        stmt.setString(2, ipCriador);
 
         Desenho desenho = null;
 
@@ -38,7 +34,7 @@ public class DesenhoDAO implements IDesenhoDAO {
                 desenho = new Desenho();
 
                 desenho.setNome(rs.getString("nome"));
-                desenho.setIpCriador(rs.getString("ip_criador"));
+                desenho.setIpAtualizacao(rs.getString("ip_criador"));
                 desenho.setDataCriacao(rs.getObject("data_criacao", LocalDateTime.class));
                 desenho.setDataUltimaAtualizacao(rs.getObject("data_ult_atualizacao", LocalDateTime.class));
 
@@ -64,7 +60,7 @@ public class DesenhoDAO implements IDesenhoDAO {
         Connection con = ConexaoBD.getConexaoBD();
         PreparedStatement stmt = null;
 
-        Desenho desenhoExistente = buscarDesenho(desenho.getIpCriador(), desenho.getNome());
+        Desenho desenhoExistente = buscarDesenho(desenho.getNome());
 
         try {
             if (desenhoExistente != null) {
@@ -73,14 +69,14 @@ public class DesenhoDAO implements IDesenhoDAO {
                 stmt.setObject(1, desenho.getDataUltimaAtualizacao());
                 stmt.setString(2, desenho.getFigurasString());
                 stmt.setString(3, desenho.getNome());
-                stmt.setString(4, desenho.getIpCriador());
+                stmt.setString(4, desenho.getIpAtualizacao());
 
                 stmt.executeUpdate();
             } else {
                 stmt = con.prepareStatement("INSERT INTO Editor.Desenhos (nome,ip_criador,data_criacao,data_ult_atualizacao,figuras) VALUES (?,?,?,?,?)");
 
                 stmt.setString(1, desenho.getNome());
-                stmt.setString(2, desenho.getIpCriador());
+                stmt.setString(2, desenho.getIpAtualizacao());
                 stmt.setObject(3, desenho.getDataCriacao());
                 stmt.setObject(4, desenho.getDataUltimaAtualizacao());
                 stmt.setString(5, desenho.getFigurasString());
@@ -98,18 +94,13 @@ public class DesenhoDAO implements IDesenhoDAO {
     }
 
 	@Override
-	public List<Desenho> buscarDesenhos(String ipCriador) throws Exception {
-        if (ipCriador == null || ipCriador == "")
-            throw new Exception("O IP do criador não pode ser vazio ou nulo");
-
+	public List<Desenho> buscarDesenhos() throws Exception {
         Connection con = ConexaoBD.getConexaoBD();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        stmt = con.prepareStatement("SELECT nome, ip_criador, data_criacao, data_ult_atualizacao, figuras FROM Editor.Desenhos WHERE ip_criador = ?");
-        
-        stmt.setString(1, ipCriador);
-
+        stmt = con.prepareStatement("SELECT nome, ip_criador, data_criacao, data_ult_atualizacao, figuras FROM Editor.Desenhos");
+    
         List<Desenho> desenhos = new ArrayList<Desenho>();
 
         try {
@@ -119,7 +110,7 @@ public class DesenhoDAO implements IDesenhoDAO {
                 Desenho desenho = new Desenho();
 
                 desenho.setNome(rs.getString("nome"));
-                desenho.setIpCriador(rs.getString("ip_criador"));
+                desenho.setIpAtualizacao(rs.getString("ip_criador"));
                 desenho.setDataCriacao(rs.getObject("data_criacao", LocalDateTime.class));
                 desenho.setDataUltimaAtualizacao(rs.getObject("data_ult_atualizacao", LocalDateTime.class));
 

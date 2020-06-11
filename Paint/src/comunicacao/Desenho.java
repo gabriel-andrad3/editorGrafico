@@ -1,6 +1,7 @@
 package comunicacao;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,22 @@ public class Desenho implements Serializable {
     private static final long serialVersionUID = 934581887387077915L;
 
     private String nome;
+    private String ipAtualizacao;
+    private LocalDateTime dataAtualizacao;
+    private LocalDateTime dataCriacao;
 	private ArrayList<String> figuras;
-	
-    public Desenho(String nome)
+    
+    public Desenho(String nome) {
+        this.nome = nome;
+        this.figuras = new ArrayList<String>();
+    }
+
+    public Desenho(String nome, String ipAtualizacao, LocalDateTime dataAtualizacao, LocalDateTime dataCriacao)
     {
         this.nome = nome;
+        this.ipAtualizacao = ipAtualizacao;
+        this.dataAtualizacao = dataAtualizacao;
+        this.dataCriacao = dataCriacao;
 		this.figuras = new ArrayList<String>();
     }
 	
@@ -42,6 +54,23 @@ public class Desenho implements Serializable {
     }
     
     public String getNome() {
+        return this.nome;
+    }
+
+    public String getIpAtualizacao() {
+        return this.ipAtualizacao;
+    }
+
+    public LocalDateTime getDataAtualizacao(){
+        return this.dataAtualizacao;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return this.dataCriacao;
+    }
+
+    @Override
+    public String toString() {
         return this.nome;
     }
 }

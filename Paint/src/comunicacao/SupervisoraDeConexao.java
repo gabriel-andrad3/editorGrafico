@@ -77,12 +77,12 @@ public class SupervisoraDeConexao extends Thread {
 
                     List<database.Desenho> desenhos = new ArrayList<database.Desenho>();
 
-                    desenhos = desenhoDAO.buscarDesenhos(cliente.getIp());
+                    desenhos = desenhoDAO.buscarDesenhos();
 
                     Desenhos comunicadoDesenhos = new Desenhos();
 
                     for (database.Desenho desenhoDb : desenhos) {
-                        Desenho desenho = new Desenho(desenhoDb.getNome());
+                        Desenho desenho = new Desenho(desenhoDb.getNome(), desenhoDb.getIpAtualizacao(), desenhoDb.getDataUltimaAtualizacao(), desenhoDb.getDataCriacao());
 
                         for (String figura : desenhoDb.getFiguras()) {
                             desenho.addFigura(figura);
@@ -98,29 +98,15 @@ public class SupervisoraDeConexao extends Thread {
 
                     PedidoSalvamento pedidoSalvamento = (PedidoSalvamento)comunicado;
                     
-                    database.Desenho desenho = null;
+                    database.Desenho desenho = new database.Desenho();
 
-                    desenho = desenhoDAO.buscarDesenho(cliente.getIp(), pedidoSalvamento.getDesenho().getNome());
+                    desenho.setIpAtualizacao(cliente.getIp());
+                    desenho.setNome(pedidoSalvamento.getDesenho().getNome());
+                    desenho.setFiguras(pedidoSalvamento.getDesenho().getFiguras());
+                    desenho.setDataCriacao(LocalDateTime.now());
+                    desenho.setDataUltimaAtualizacao(LocalDateTime.now());
 
-                    if (desenho != null) {
-                        System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' já existe para o cliente " + cliente.getIp() + " e será atualizado");
-
-                        desenho.setFiguras(pedidoSalvamento.getDesenho().getFiguras());
-                        desenho.setDataUltimaAtualizacao(LocalDateTime.now());
-                    }
-                    else {
-                        System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' não existe para o cliente " + cliente.getIp() + " e será criado");
-
-                        desenho = new database.Desenho();
-
-                        desenho.setIpCriador(cliente.getIp());
-                        desenho.setNome(pedidoSalvamento.getDesenho().getNome());
-                        desenho.setFiguras(pedidoSalvamento.getDesenho().getFiguras());
-                        desenho.setDataCriacao(LocalDateTime.now());
-                        desenho.setDataUltimaAtualizacao(LocalDateTime.now());
-                    }
-
-                    System.out.println("Conteúdo do desenho '" + pedidoSalvamento.getDesenho().getNome() + "' do cliente " + cliente.getIp());
+                    System.out.println("Conteúdo do desenho '" + pedidoSalvamento.getDesenho().getNome() + "'");
                         
                     for (String figura : desenho.getFiguras()) {
                         System.out.println(figura);
@@ -128,7 +114,7 @@ public class SupervisoraDeConexao extends Thread {
 
                     desenhoDAO.salvarDesenho(desenho);
 
-                    System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + "' do cliente " + cliente.getIp() + " foi salvo com sucesso");
+                    System.out.println("O desenho '" + pedidoSalvamento.getDesenho().getNome() + " foi salvo com sucesso");
                 }
                 else if (comunicado instanceof EncerrarConexao) {
                     synchronized (this.clientes) {
