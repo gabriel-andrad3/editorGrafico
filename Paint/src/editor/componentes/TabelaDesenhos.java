@@ -1,5 +1,9 @@
 package editor.componentes;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Vector;
 
@@ -46,10 +50,10 @@ public class TabelaDesenhos extends JFrame {
 
         list.getSelectionModel().addListSelectionListener(x -> {
             Desenho desenho = list.getSelectedValue();
-
+            
             lblNome.setText("Nome: " + desenho.getNome());
-            lblDataCriacao.setText("Data Criação: " + desenho.getDataAtualizacao());
-            lblDataAtualizacao.setText("Data Última Atualização: " + desenho.getDataAtualizacao().toString());
+            lblDataCriacao.setText("Data Criação: " + formatarData(desenho.getDataCriacao()));
+            lblDataAtualizacao.setText("Data Última Atualização: " + formatarData(desenho.getDataAtualizacao()));
             lblIpAtualizacao.setText("Ip Última Atualização: " + desenho.getIpAtualizacao());   
 
             janela.getPainelDesenho().getGraphics().clearRect(0, 0, (int)janela.getSize().getWidth(), (int)janela.getSize().getHeight());
@@ -104,5 +108,18 @@ public class TabelaDesenhos extends JFrame {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    private String formatarData(LocalDateTime data) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+
+        ZoneId utcZone = ZoneId.of("UTC");
+        ZoneId brZone = ZoneId.of("America/Sao_Paulo");
+
+        ZonedDateTime dataUtc = data.atZone(utcZone);
+
+        ZonedDateTime dataBr = dataUtc.withZoneSameInstant(brZone);
+
+        return formatter.format(dataBr.toLocalDateTime());
     }
 }

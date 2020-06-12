@@ -64,7 +64,7 @@ public class DesenhoDAO implements IDesenhoDAO {
 
         try {
             if (desenhoExistente != null) {
-                stmt = con.prepareStatement("UPDATE Editor.Desenhos SET data_ult_atualizacao = ?, figuras = ?, ip_criador = ? WHERE nome = ?");
+                stmt = con.prepareStatement("UPDATE Editor.Desenhos SET data_ult_atualizacao = ?, figuras = ?, ip_ult_atualizacao = ? WHERE nome = ?");
 
                 stmt.setObject(1, desenho.getDataUltimaAtualizacao());
                 stmt.setString(2, desenho.getFigurasString());
@@ -73,7 +73,7 @@ public class DesenhoDAO implements IDesenhoDAO {
 
                 stmt.executeUpdate();
             } else {
-                stmt = con.prepareStatement("INSERT INTO Editor.Desenhos (nome, ip_criador, data_criacao, data_ult_atualizacao,figuras) VALUES (?,?,?,?,?)");
+                stmt = con.prepareStatement("INSERT INTO Editor.Desenhos (nome, ip_ult_atualizacao, data_criacao, data_ult_atualizacao,figuras) VALUES (?,?,?,?,?)");
 
                 stmt.setString(1, desenho.getNome());
                 stmt.setString(2, desenho.getIpAtualizacao());
@@ -99,7 +99,7 @@ public class DesenhoDAO implements IDesenhoDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        stmt = con.prepareStatement("SELECT nome, ip_criador, data_criacao, data_ult_atualizacao, figuras FROM Editor.Desenhos");
+        stmt = con.prepareStatement("SELECT nome, ip_ult_atualizacao, data_criacao, data_ult_atualizacao, figuras FROM Editor.Desenhos");
     
         List<Desenho> desenhos = new ArrayList<Desenho>();
 
@@ -110,7 +110,7 @@ public class DesenhoDAO implements IDesenhoDAO {
                 Desenho desenho = new Desenho();
 
                 desenho.setNome(rs.getString("nome"));
-                desenho.setIpAtualizacao(rs.getString("ip_criador"));
+                desenho.setIpAtualizacao(rs.getString("ip_ult_atualizacao"));
                 desenho.setDataCriacao(rs.getObject("data_criacao", LocalDateTime.class));
                 desenho.setDataUltimaAtualizacao(rs.getObject("data_ult_atualizacao", LocalDateTime.class));
 

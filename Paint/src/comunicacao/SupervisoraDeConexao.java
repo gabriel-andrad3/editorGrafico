@@ -67,7 +67,14 @@ public class SupervisoraDeConexao extends Thread {
             }
 
             for(;;) {
-                Comunicado comunicado = this.cliente.envie();
+                Comunicado comunicado = null;
+
+                if (this.cliente != null) {
+                    comunicado = this.cliente.envie();
+                }
+                else {
+                    continue;
+                }
 
                 if (comunicado == null)
                     return;
@@ -123,6 +130,8 @@ public class SupervisoraDeConexao extends Thread {
 
                     this.cliente.adeus();
                     System.out.println("Cliente desconectado!");
+
+                    this.cliente = null;
                 }
             }
         }
