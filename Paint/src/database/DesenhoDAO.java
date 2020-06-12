@@ -64,16 +64,16 @@ public class DesenhoDAO implements IDesenhoDAO {
 
         try {
             if (desenhoExistente != null) {
-                stmt = con.prepareStatement("UPDATE Editor.Desenhos SET data_ult_atualizacao = ?, figuras = ? WHERE nome = ? && ip_criador = ?");
+                stmt = con.prepareStatement("UPDATE Editor.Desenhos SET data_ult_atualizacao = ?, figuras = ?, ip_criador = ? WHERE nome = ?");
 
                 stmt.setObject(1, desenho.getDataUltimaAtualizacao());
                 stmt.setString(2, desenho.getFigurasString());
-                stmt.setString(3, desenho.getNome());
-                stmt.setString(4, desenho.getIpAtualizacao());
+                stmt.setString(3, desenho.getIpAtualizacao());
+                stmt.setString(4, desenho.getNome());
 
                 stmt.executeUpdate();
             } else {
-                stmt = con.prepareStatement("INSERT INTO Editor.Desenhos (nome,ip_criador,data_criacao,data_ult_atualizacao,figuras) VALUES (?,?,?,?,?)");
+                stmt = con.prepareStatement("INSERT INTO Editor.Desenhos (nome, ip_criador, data_criacao, data_ult_atualizacao,figuras) VALUES (?,?,?,?,?)");
 
                 stmt.setString(1, desenho.getNome());
                 stmt.setString(2, desenho.getIpAtualizacao());
