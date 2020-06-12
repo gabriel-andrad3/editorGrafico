@@ -21,7 +21,7 @@ public class DesenhoDAO implements IDesenhoDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        stmt = con.prepareStatement("SELECT nome, ip_criador, data_criacao, data_ult_atualizacao, figuras FROM Editor.Desenhos WHERE nome = ?");
+        stmt = con.prepareStatement("SELECT nome, ip_ult_atualizacao, data_criacao, data_ult_atualizacao, figuras FROM Editor.Desenhos WHERE nome = ?");
         
         stmt.setString(1, nome);
 
@@ -34,7 +34,7 @@ public class DesenhoDAO implements IDesenhoDAO {
                 desenho = new Desenho();
 
                 desenho.setNome(rs.getString("nome"));
-                desenho.setIpAtualizacao(rs.getString("ip_criador"));
+                desenho.setIpAtualizacao(rs.getString("ip_ult_atualizacao"));
                 desenho.setDataCriacao(rs.getObject("data_criacao", LocalDateTime.class));
                 desenho.setDataUltimaAtualizacao(rs.getObject("data_ult_atualizacao", LocalDateTime.class));
 
