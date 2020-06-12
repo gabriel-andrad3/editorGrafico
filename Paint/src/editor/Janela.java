@@ -58,7 +58,7 @@ public class Janela extends JFrame {
 
     protected Texto texto;
 
-    public static final String HOST_PADRAO  = "192.168.1.20";
+    public static final String HOST_PADRAO  = "localhost";
     public static final int PORTA_PADRAO = 12345;
 
     private Parceiro servidor = null;
